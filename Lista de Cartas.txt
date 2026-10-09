@@ -1,0 +1,250 @@
+- Albedo x
+- Klee x
+- Mona x
+- Nicole x
+- Prune x
+- Dodoco x
+- Dodocannon x
+- Witches' tea party x
+- Dodocomunicator x
+- Fischl x
+- Magic Bubble x
+- Venti x
+- Mini Durin x
+- Imaginarium theater x
+- Wolfy x
+- Witch's Homework x
+- The boar princess x
+- Xiao x
+- Cloud Reteiner x
+- Xianyun x
+- Zhongli x
+- Yanfei x
+- Bosacius x
+- Solitary Suanni x
+- Xuanwen beast x
+- Xiangling x
+- Guoba x
+- Seal of permition x
+- Guili assemble x
+- Karma x 
+- Guizong balista x
+- Zibai x
+- Raiden Ei x
+- Kappa X
+- Kujou Sara x
+- Yae Miko x
+- Sasayuri x
+- Oni x
+- Arataki Itto x
+- Blue Oni x
+- Ginkaku x
+- Bake Danuke x
+- Ioroi x
+- Kitsune statue x
+- Toukabou Shigure x
+- Kamen x
+- Mussou no Hitotachi x
+- Aaru x
+- Golden Slumber x
+- Nahida X
+- Toth X
+- Nefer X
+- Cyno X
+- Sethos X
+- temple of Silence X
+- A.S.I.M.O.N X
+- Volture X
+- Primal Construct: repulsor X
+- Primal Construct: Prospector X
+- Forbhidden Knowlagde X
+- Dehya X
+- Eremite X
+- Sandrone X
+- Ineffa X
+- Aino X
+- Freminet x
+- Recon log mek X
+- Underwater survey mek X
+- Suppression specialist mek x
+- Storm landcruiser x
+- Mechanized Fortress x
+- Fontaine research institute X
+- Scrap robots X
+- Pulonia x
+- Fagio X
+- World Formula X
+- Garde X
+- Citlali X 
+- Mavuika X
+- Ororon X 
+- Capitano X
+- Iktomisaurus X
+- Tlapo X
+- Biram X
+- Night kingdom X
+- Aciant name x
+- Wyaob X
+- Obisidian Pillar x
+- Nightsoul state x
+- Fishing acient names x
+- Ode of ressurection x
+- Spiritspeaker Warrior x
+- Iktomisaurus Warrior x
+- Spiritspeaker state x
+- Nightspirit graffiti x
+- Phlogistum x
+- Baby Iktomisaurus x
+- Lauma X
+- Columbina x
+- Collei x
+- Tighnari x
+- Radiant moonfly x
+- Juvenille leshy x
+- Elder lesh x
+- Radiant Bladehorn x
+- Dualblaze ibis x
+- Fluffahog x
+- Blunthorn Rhino x
+- Fuzzbadge x
+- Rimehorn deer x
+- Wrath of the forest X
+- Moonglow firefly xx
+- Winter Icelea xx
+- Frostmoon priest xx
+- Imprision xx
+- Moon prayer xx
+- Nastya xx
+- Anastasya xx
+- Pierro xx
+- Jack Frost x x
+- Jack Frost Chief xx 
+- Lumi xx
+- Linneaxx
+- Vesna x x
+- Druzhna Knight x
+- Snegovik Guard x
+- Snegurochka glaciomancer x
+- Long-Eared Striker x
+- Snow Giant x
+- Vodyanitsa x
+- Siren Song x
+- Flins x
+- Pavlina x
+- Belyi tsar's wish x
+- Eye of Graeae x
+- Imperial march x
+- Kresnik Tourch x
+- Hilichurl warrior x
+- Hilichurl shooter  x
+- Mitachurl Blazing Axex
+- Hydro Samachurl x
+- Ella Muskx
+- Hilichurl campx
+- Curse of Wildernessx
+- geo Lawachurlx
+- Pyro Slime  x
+- Unusual Hilichurlx
+- Churldricx
+- final rest x 
+- Explosive barrielx
+- Totemx
+- Furinax
+- Gentilhomme Usherx
+- Surintendante Chevalmarinx
+- Mademoiselle Crabalettax
+- Hydro Tulpax
+- Oceanidxx
+- Hydro eidolonx
+- Fontain of Lucinex
+- Koholasaurusx
+- Young koholasaurusx
+- Cucusaurus x
+- Geo vishapx
+- Dottore 20x
+- Arabalikax
+- Aranyakax
+- Aramax
+- Yingyierx
+- Knowladge Capsulex
+- Fatui Debt collector x
+- Oprichnik Line Trooper x
+- Frost operative x
+- Odette x
+- Arlecchino x
+- Knight of Favoniusx
+- Umbrellafinch
+- Jahoda
+- Anemo sigil
+- Hydro sigil
+- Pyro sigil
+- Cryo sigil
+- Geo sigil
+- Dendro sigil
+- Electro sigil
+- Anemoculus
+- Geoculusx
+- Pyroculusx
+- Hydroculusx
+- Cryoculusx
+- Dendroculus
+- Electroculusx
+- Elemental ressonance
+- Leyline overflow
+- Aggravate
+- Spread
+- Vaporize
+- Melt
+- Freeze
+- Superconduct
+- Overload
+- Electro-charged
+- Burning
+- Bloom
+- Hyperbloom
+- Burgeon
+- Shatter
+- Riemgrass
+- Swirl
+- Crystalize
+- Lunar-charged
+- Lunar-crystalize
+- Lunar constructs
+- Lunarbloom
+- Stellarswirl
+- Stellar vortex
+- Stellarconduct
+- Polestar Field
+- Polar star edict mandate x
+- Aether 3x
+- Paimon 3x
+- Seelie guide 3x
+- Hexaiphaines blade 2x
+- Statue of the seven 3x
+- Nihylita 1x
+- Domain keeper 3x
+- Celestial Nail purification 2x
+- Celestia x1
+- Celestial envoy 2x
+- False Sky 2x
+- Purify 1x
+- Spaceship 2x
+- Elemental conversion 3x
+- Leylines 3x
+- Istoria 3x
+- Dark Dragon 2x
+- Lumine 3x x
+- Hydro Abyss Herald 2x x
+- Cryo Abyss Mage 3x x
+- Defieled statue 3x x
+- Transcend 3x x
+- Abyssal call 2x 
+- Loom of fate 1x x
+- Cryo Abyss herald 2x x
+- Clothar 2x x
+- Caribert 2x x
+- Ruin guard 2x x
+- Ruin destroyer 3x x
+- Sinner's blessing 1x x
+- Tenebrous Mimiflora 2x x
+- Abyssal rift 3x x
