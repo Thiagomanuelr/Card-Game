@@ -7,11 +7,11 @@ class Aether:
         self.type = "Character"
         self.element = "Omni"
         self.tag = "Celestial"
-        self.cost = 3
+        self.cost = 4
         self.power = 300
         self.hp = 400
         self.r = "C"
-        self.passive = "Omni Strike: Aether can change elements by equipping specific elemental energy cards. When a *Celestial card is played, Aether gains +100 power for 1 turn."
+        self.passive = "Omni Strike: Aether can change elements by copying an ally element once they are played. When a *Celestial card is played, Aether gains +100 power for 1 combat."
 
 class Pyro_Seelie_Guide:
     def __init__(self):
@@ -43,7 +43,7 @@ class Hexaiphanes_Blade:
         self.type = "Weapon"
         self.element = "Omni"
         self.tag = "Celestial"
-        self.cost = 4
+        self.cost = 6
         self.r = "SR"
         
         self.passive = "When equipped, increase the power of your character by 50 and grant them an additional attack per turn."
@@ -51,10 +51,10 @@ class Hexaiphanes_Blade:
 class Statue_of_the_Seven:
     def __init__(self):
         self.name = "Statue of the Seven"
-        self.type = "Spell"
+        self.type = "Support"
         self.element = "Omni"
         self.tag = "Celestial"
-        self.cost = 3
+        self.cost = 4
         self.duration = "combat"
         self.r = "C"
         
@@ -66,7 +66,7 @@ class Nihilita:
         self.type = "Character"
         self.element = "Geo"
         self.tag = "Celestial"
-        self.cost = 4
+        self.cost = 6
         self.power = 550
         self.hp = 350
         self.r = "SR"
@@ -82,15 +82,15 @@ class Domain_Keeper:
         self.power = 100
         self.hp = 450
         self.r = "R"
-        self.passive = "When Domain Keeper is in play, all Geo cards in your hand cost 1 less energy to play."
+        self.passive = "When Domain Keeper is in play, all Geo cards in your hand cost 1 less cost to play."
 
 class Celestial_Nail:
     def __init__(self):
         self.name = "Celestial Nail"
-        self.type = "Spell"
+        self.type = "Support"
         self.element = "Omni"
         self.tag = "Celestial"
-        self.cost = 5
+        self.cost = 8
         self.duration = "Cast"
         self.r = "R"
         self.passive = "When activated, clear all enemy spells from the field and deal 200 damage to all enemy characters."
@@ -98,13 +98,13 @@ class Celestial_Nail:
 class Celestia:
     def __init__(self):
             self.name = "Celestia"
-            self.type = "Spell"
+            self.type = "Support"
             self.element = "Omni"
             self.tag = "Celestial"
-            self.cost = 5
+            self.cost = 8
             self.duration = "combat"
             self.r = "R"
-            self.passive = "While in combat, all *Celestial cards +200atq +100hp, +1 energy per turn"
+            self.passive = "While in combat, all *Celestial cards +200atq +100hp, +1 cost per turn"
 
 class Celestial_Envoy:
     def __init__(self):
@@ -121,18 +121,18 @@ class Celestial_Envoy:
 class Fake_Sky:
     def __init__(self):
         self.name = "Fake Sky"
-        self.type = "Spell"
+        self.type = "Support"
         self.element = "Omni"
         self.tag = "Celestial"
-        self.cost = 3
+        self.cost = 4
         self.duration = "3 turns"
         
-        self.passive = "-1 energy per turn for the enemy player for 3 turns."
+        self.passive = "-1 cost per turn for the enemy player for 3 turns."
 
 class Purification:
     def __init__(self):
         self.name = "Purification"
-        self.type = "Spell"
+        self.type = "Support"
         self.element = "Omni"
         self.tag = "Celestial"
         self.cost = 2
@@ -143,10 +143,10 @@ class Purification:
 class Spaceship:
     def __init__(self):
         self.name = "Spaceship"
-        self.type = "Spell"
+        self.type = "Support"
         self.element = "Omni"
         self.tag = "Celestial"
-        self.cost = 4
+        self.cost = 6
         self.duration = "Cast"
         
         self.passive = "When activated, discard all cards in your hand and draw 5 new cards. Destroy this card after use."
@@ -154,24 +154,24 @@ class Spaceship:
 class Elemental_Conversion:
     def __init__(self):
         self.name = "Elemental Conversion"
-        self.type = "Spell"
+        self.type = "Support"
         self.element = "Omni"
         self.tag = "Celestial", "Abyssal"
         self.cost = 2
         self.duration = "Cast"
         
-        self.passive = "When activated, change the element of one of your energy cards to any element in the deck."
+        self.passive = "When activated, change the element of one of your cost cards to any element in the deck."
 
 class Leylines:
     def __init__(self):
         self.name = "Leylines"
-        self.type = "Spell"
+        self.type = "Support"
         self.element = "Omni"
         self.tag = "Celestial", "Elemental"
         self.cost = 2
         self.duration = "combat"
         
-        self.passive = "Discard one, +1 energy"
+        self.passive = "Discard one, +1 cost"
 
 class Istoria:
     def __init__(self):
@@ -182,7 +182,7 @@ class Istoria:
         self.cost = 1
         self.power = 100
         self.hp = 200
-        self.passive = "While in combat, all *Celestial cards in your hand cost 1 less energy to play, the effect doesn't stack. When Istoria is destroyed, draw 1 card."
+        self.passive = "While in combat, all *Celestial cards in your hand cost 1 less cost to play, the effect doesn't stack. When Istoria is destroyed, draw 1 card."
 
 class Ursa_the_Drake:
     def __init__(self):
@@ -190,7 +190,7 @@ class Ursa_the_Drake:
         self.type = "Character"
         self.element = "Pyro"
         self.tag = "Celestial", "Dragon"
-        self.cost = 3
+        self.cost = 4
         self.power = 600
         self.hp = 300
         self.passive = "Discard one card from your hand to destroy an enemy character with 400 or less HP. This effect can only be used once per combat."
@@ -208,10 +208,10 @@ class Anastasia:
         self.type = "Character"
         self.element = "Cryo"
         self.tag = "Fae", "Fatui", "Stellar"
-        self.cost = 5
+        self.cost = 8
         self.power = 700
         self.hp = 500
-        self.passive = "When Anastasia is in play, all Cryo cards in your hand cost 1 less energy to play. Binds 2 enemy characters for 2 turn."
+        self.passive = "When Anastasia is in play, all Cryo cards in your hand cost 1 less cost to play. Binds 2 enemy characters for 2 turn."
 
 
 class Jack_Frost:
@@ -242,7 +242,7 @@ class Snegovik_Guard:
         self.type = "Character"
         self.element = "Cryo"
         self.tag = "Fae"
-        self.cost = 3
+        self.cost = 4
         self.power = 400
         self.hp = 400
         self.passive = "When Snegovik Guard is in play, when a *Fae card is destroyed, draw 1 card."
@@ -256,7 +256,7 @@ class Snegurochka_Cryomancer:
         self.cost = 2
         self.power = 400
         self.hp = 200
-        self.passive = "Cryo Spell cards cost 1 less energy to play."
+        self.passive = "Cryo Support cards cost 1 less cost to play."
 
 class Pavlina:
     def __init__(self):
@@ -264,7 +264,7 @@ class Pavlina:
         self.type = "Character"
         self.element = "Cryo"
         self.tag = "Fae"
-        self.cost = 4
+        self.cost = 6
         self.power = 550
         self.hp = 400
         self.passive = "Start of the combat: increase all cryo *Fae cards power by 150. When destroyed, bind 1 enemy character for 2 turns."
@@ -275,7 +275,7 @@ class Snow_Giant:
         self.type = "Character"
         self.element = "Cryo"
         self.tag = "Fae"
-        self.cost = 4
+        self.cost = 6
         self.power = 350
         self.hp = 600
         self.passive = "Enemies can olny atack Snow Giant, if they have 2 or more characters in play. When destroyed, draw 1 card."
@@ -286,7 +286,7 @@ class Vesna:
         self.type = "Character"
         self.element = "Anemo"
         self.tag = "Fae", "Stellar"
-        self.cost = 3
+        self.cost = 4
         self.power = 450
         self.hp = 350
         self.passive = "Can attack twice per turn. When Swirl or StellarSwirl are played, draw 1 card."
@@ -316,10 +316,10 @@ class Royal_Guard_Druzhna:
 class Belyi_Tsars_Wish:
     def __init__(self):
         self.name = "Belyi Tsar's Wish"
-        self.type = "Spell"
+        self.type = "Support"
         self.element = "Cryo"
         self.tag = "Fae"
-        self.cost = 4
+        self.cost = 6
         self.duration = "Combat"
         
         self.passive = "When activated, discard a *Fae card from your hand to draw Anastasya from your deck."
@@ -327,18 +327,18 @@ class Belyi_Tsars_Wish:
 class Kresnik_Torch:
     def __init__(self):
         self.name = "Kresnik Torch"
-        self.type = "Spell"
+        self.type = "Support"
         self.element = "Cryo"
         self.tag = "Fatui"
-        self.cost = 3
+        self.cost = 4
         self.duration = "Cast"
         
-        self.passive = "give one extra energy per turn."
+        self.passive = "give one extra cost per turn."
 
 class Eye_of_Graeae:
     def __init__(self):
         self.name = "Eye of Graeae"
-        self.type = "Spell"
+        self.type = "Support"
         self.element = "Cryo"
         self.tag = "Fae", "Stellar"
         self.cost = 1
@@ -349,7 +349,7 @@ class Eye_of_Graeae:
 class Imperial_March:
     def __init__(self):
         self.name = "Imperial March"
-        self.type = "Spell"
+        self.type = "Support"
         self.element = "Anemo"
         self.tag = "Fae", "Fatui"
         self.cost = 2
@@ -360,10 +360,10 @@ class Imperial_March:
 class Mistilteinn:
     def __init__(self):
         self.name = "Mistilteinn"
-        self.type = "Weapon"
+        self.type = "Support"
         self.element = "Cryo"
         self.tag = "Fatui", "Stellar"
-        self.cost = 7
+        self.cost = 15
         self.duration = "Combat"
         
         self.passive = "When equipped, Destroy all enemy characters with 400 or less HP. Than, increase the power and hp of the equiped character by 100 for each destroyed enemy."
@@ -371,10 +371,10 @@ class Mistilteinn:
 class FrostBite:
     def __init__(self):
         self.name = "FrostBite"
-        self.type = "Weapon"
+        self.type = "Support"
         self.element = "Cryo"
         self.tag = "Fae"
-        self.cost = 4
+        self.cost = 6
         self.duration = "Combat"
         
         self.passive = "When played: stun an enemy character for 1 turn. For the rest of the combat, stunned and binded characters receive -200 hp."
@@ -391,10 +391,10 @@ class Lumine:
         self.type = "Character"
         self.element = "Omni"
         self.tag = "Abyssal"
-        self.cost = 3
+        self.cost = 4
         self.power = 400
         self.hp = 300
-        self.passive = "Abyssal Strike: Lumine can change elements by equipping specific elemental energy cards, for each card that goes to the disdcard pile, Lumine gains 100 power for 1  turn."
+        self.passive = "Abyssal Strike: Lumine can change elements by equipping specific elemental cost cards, for each card that goes to the disdcard pile, Lumine gains 100 power for 1  turn."
 
 class Cryo_Abyss_Mage:
     def __init__(self):
@@ -446,7 +446,7 @@ class Cryo_Abyss_Herald:
         self.type = "Character"
         self.element = "Cryo"
         self.tag = "Abyssal"
-        self.cost = 4
+        self.cost = 6
         self.power = 550
         self.hp = 400
         self.passive = "When played, discard a card from your hand to get piercing."
@@ -457,7 +457,7 @@ class Hydro_Abyss_Herald:
         self.type = "Character"
         self.element = "Hydro"
         self.tag = "Abyssal"
-        self.cost = 4
+        self.cost = 6
         self.power = 400
         self.hp = 550
         self.passive = "When played, discard a card from your hand to bind an enemy character for 1 turn."
@@ -465,10 +465,10 @@ class Hydro_Abyss_Herald:
 class Transcending_Fate:
     def __init__(self):
         self.name = "Transcending Fate"
-        self.type = "Spell"
+        self.type = "Support"
         self.element = "Omni"
         self.tag = "Abyssal"
-        self.cost = 3
+        self.cost = 4
         self.duration = "Combat"
         
         self.passive = "When activated, discard a card from your hand to play a *Abyssal card from your discard pile."
@@ -476,10 +476,10 @@ class Transcending_Fate:
 class Loom_of_Fate:
     def __init__(self):
         self.name = "Loom of Fate"
-        self.type = "Spell"
+        self.type = "Support"
         self.element = "Omni"
         self.tag = "Abyssal"
-        self.cost = 4
+        self.cost = 6
         self.duration = "once"
         
         self.passive = "Play a *Abyssal card from your discard pile. Than, discard a card from your hand to play a *Abyssal card from your deck."
@@ -498,24 +498,24 @@ class Tenebrous_Mimiflora:
 class Abyssal_Rift:
     def __init__(self):
         self.name = "Abyssal Rift"
-        self.type = "Spell"
+        self.type = "Support"
         self.element = "Omni"
         self.tag = "Abyssal"
-        self.cost = 3
+        self.cost = 4
         self.duration = "once"
         
-        self.passive = "When activated, return a card from the field to the hand. Than, play a card *Abyssal card up to 3 cost from your deck."
+        self.passive = "When activated, return a card from the field to the hand. Than, play a card *Abyssal card up to 4 cost from your deck."
 
 class Sinners_Blessing:
     def __init__(self):
         self.name = "Sinner's Blessing"
-        self.type = "Spell"
+        self.type = "Support"
         self.element = "Omni"
         self.tag = "Abyssal", "Khaenri'ah"
         self.cost = 2
         self.duration = "once"
         
-        self.passive = "destroy a 3 cost or less card from the field to play an 4 or more cost *Abyssal card from your discard pile. Than."
+        self.passive = "destroy a 4 cost or less card from the field to play an 6 or more cost *Abyssal card from your discard pile. Than."
 
 class Defield_Statue:
     def __init__(self):
@@ -523,7 +523,7 @@ class Defield_Statue:
         self.type = "Character"
         self.element = "Omni"
         self.tag = "Abyssal"
-        self.cost = 4
+        self.cost = 6
         self.power = 0
         self.hp = 600
         self.passive = "Increase the power of all *Abyssal cards other than this one by 50 per card in the discard pile."
@@ -534,7 +534,7 @@ class Ruin_Guard:
         self.type = "Character"
         self.element = "Omni"
         self.tag = "Khaenri'ah", "Automaton"
-        self.cost = 3
+        self.cost = 4
         self.power = 400
         self.hp = 500
         self.passive = "When played, destroy a card with 2 or less cost from the enemy's field."
@@ -542,7 +542,7 @@ class Ruin_Guard:
 class Corrupted_Blood:
     def __init__(self):
         self.name = "Corrupted Blood"
-        self.type = "Spell"
+        self.type = "Support"
         self.element = "Omni"
         self.tag = "Abyssal"
         self.cost = 2
@@ -567,10 +567,10 @@ class Elynas:
         self.type = "Character"
         self.element = "Hydro"
         self.tag = "Abyssal"
-        self.cost = 5
+        self.cost = 8
         self.power = 600
         self.hp = 400
-        self.passive = "When played, destroy all 3 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
+        self.passive = "When played, destroy all 4 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
 
 abyssDeck = [Lumine, Cryo_Abyss_Mage, Hydro_Abyss_Mage, Caribert, Chlothar, Cryo_Abyss_Herald, Hydro_Abyss_Herald, Elemental_Conversion, Transcending_Fate, Loom_of_Fate, Tenebrous_Mimiflora, Abyssal_Rift, Sinners_Blessing, Defield_Statue, Ruin_Guard, Corrupted_Blood, Ruin_Destroyer_Serpent, Elynas]
 
@@ -583,7 +583,7 @@ class Albedo:
         self.type = "Character"
         self.element = "Geo"
         self.tag = "Knights of Favonius", "Hexerei", "Alchemy"
-        self.cost = 3
+        self.cost = 4
         self.power = 350
         self.hp = 350
         self.passive = "On play, use Transmutation to play a character from the discard pile or hand"
@@ -597,7 +597,7 @@ class Klee:
         self.cost = 2
         self.power = 300
         self.hp = 200
-        self.passive = "When played, destroy all 3 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
+        self.passive = "When played, destroy all 4 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
 
 class Nicole:
     def __init__(self):
@@ -605,10 +605,10 @@ class Nicole:
             self.type = "Character"
             self.element = "Pyro"
             self.tag = "Hexerei", "Celestial"
-            self.cost = 5
+            self.cost = 8
             self.power = 550
             self.hp = 650
-            self.passive = "When played, destroy all 3 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
+            self.passive = "When played, destroy all 4 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
 
 class Mona:
     def __init__(self):
@@ -616,10 +616,10 @@ class Mona:
             self.type = "Character"
             self.element = "Hydro"
             self.tag = "Hexerei", "Astrology"
-            self.cost = 3
+            self.cost = 4
             self.power = 300
             self.hp = 400
-            self.passive = "When played, destroy all 3 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
+            self.passive = "When played, destroy all 4 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
 
 class Prune:
     def __init__(self):
@@ -630,7 +630,7 @@ class Prune:
             self.cost = 1
             self.power = 250
             self.hp = 150
-            self.passive = "When played, destroy all 3 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
+            self.passive = "When played, destroy all 4 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
 
 class Dodoco:
     def __init__(self):
@@ -641,7 +641,7 @@ class Dodoco:
             self.cost = 1
             self.power = 150
             self.hp = 250
-            self.passive = "When played, destroy all 3 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
+            self.passive = "When played, destroy all 4 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
 
 class Dodocannon:
     def __init__(self):
@@ -649,10 +649,10 @@ class Dodocannon:
             self.type = "Character"
             self.element = "Pyro"
             self.tag = "Hexerei", "Automaton"
-            self.cost = 3
+            self.cost = 4
             self.power = 300
             self.hp = 400
-            self.passive = "When played, destroy all 3 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
+            self.passive = "When played, destroy all 4 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
 
 class Witches_Tea_Party:
     def __init__(self):
@@ -662,7 +662,7 @@ class Witches_Tea_Party:
             self.tag ="Hexerei"
             self.cost = 2
            
-            self.passive = "When played, destroy all 3 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
+            self.passive = "When played, destroy all 4 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
 
 class Dodocomunicator:
     def __init__(self):
@@ -672,7 +672,7 @@ class Dodocomunicator:
             self.tag ="Hexerei"
             self.cost = 1
             
-            self.passive = "When played, destroy all 3 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
+            self.passive = "When played, destroy all 4 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
 
 class Fischl:
     def __init__(self):
@@ -683,7 +683,7 @@ class Fischl:
             self.cost = 2
             self.power = 350
             self.hp = 150
-            self.passive = "When played, destroy all 3 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
+            self.passive = "When played, destroy all 4 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
 
 class Magic_Bubble:
     def __init__(self):
@@ -691,9 +691,9 @@ class Magic_Bubble:
             self.type = "Support"
             self.element = "Omni"
             self.tag ="Hexerei"
-            self.cost = 3
+            self.cost = 4
            
-            self.passive = "When played, destroy all 3 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
+            self.passive = "When played, destroy all 4 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
 
 class Venti:
     def __init__(self):
@@ -701,10 +701,10 @@ class Venti:
             self.type = "Character"
             self.element = "Anemo"
             self.tag = "Knights of Favonius", "Hexerei", "Church of Favonius", "Celestial"
-            self.cost = 5
+            self.cost = 8
             self.power = 550
             self.hp = 450
-            self.passive = "When played, destroy all 3 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
+            self.passive = "When played, destroy all 4 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
 
 class Mini_Durin:
     def __init__(self):
@@ -715,7 +715,7 @@ class Mini_Durin:
             self.cost = 1
             self.power = 150
             self.hp = 250
-            self.passive = "When played, destroy all 3 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
+            self.passive = "When played, destroy all 4 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
 
 class Imaginarium_Theather:
     def __init__(self):
@@ -723,9 +723,9 @@ class Imaginarium_Theather:
             self.type = "Support"
             self.element = "Omni"
             self.tag ="Hexerei", "Fairy Tale"
-            self.cost = 4
+            self.cost = 6
             
-            self.passive = "When played, destroy all 3 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
+            self.passive = "When played, destroy all 4 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
 
 class Wolfy:
     def __init__(self):
@@ -736,7 +736,7 @@ class Wolfy:
             self.cost = 1
             self.power = 50
             self.hp = 350
-            self.passive = "When played, destroy all 3 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
+            self.passive = "When played, destroy all 4 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
 
 class Witches_Homework:
     def __init__(self):
@@ -744,9 +744,9 @@ class Witches_Homework:
             self.type = "Support"
             self.element = "Omni"
             self.tag ="Hexerei"
-            self.cost = 3
+            self.cost = 4
            
-            self.passive = "When played, destroy all 3 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
+            self.passive = "When played, destroy all 4 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
 
 class The_Boar_Princess:
     def __init__(self):
@@ -756,7 +756,7 @@ class The_Boar_Princess:
             self.tag = "Hexerei", "Fairy Tale"
             self.cost = 2
             
-            self.passive = "When played, destroy all 3 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
+            self.passive = "When played, destroy all 4 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
 
 class Xiao:
     def __init__(self):
@@ -764,10 +764,10 @@ class Xiao:
             self.type = "Character"
             self.element = "Anemo"
             self.tag = "Adepti", "Yaksha"
-            self.cost = 4
+            self.cost = 6
             self.power = 550
             self.hp = 350
-            self.passive = "When played, destroy all 3 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
+            self.passive = "When played, destroy all 4 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
 
 class Zhongli:
     def __init__(self):
@@ -775,10 +775,10 @@ class Zhongli:
             self.type = "Character"
             self.element = "Geo"
             self.tag = "Adepti", "Celestial"
-            self.cost = 5
+            self.cost = 8
             self.power = 350
             self.hp = 650
-            self.passive = "When played, destroy all 3 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
+            self.passive = "When played, destroy all 4 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
 
 class Cloud_Retainer:
      def __init__(self):
@@ -789,7 +789,7 @@ class Cloud_Retainer:
              self.cost = 2
              self.power = 150
              self.hp = 350
-             self.passive = "When played, destroy all 3 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
+             self.passive = "When played, destroy all 4 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
 
 class Xianyun:
      def __init__(self):
@@ -797,10 +797,10 @@ class Xianyun:
              self.type = "Character"
              self.element = "Anemo"
              self.tag = "Adepti"
-             self.cost = 4
+             self.cost = 6
              self.power = 450
              self.hp = 450
-             self.passive = "When played, destroy all 3 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
+             self.passive = "When played, destroy all 4 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
 
 class Yanfei:
      def __init__(self):
@@ -811,7 +811,7 @@ class Yanfei:
              self.cost = 1
              self.power = 200
              self.hp = 200
-             self.passive = "When played, destroy all 3 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
+             self.passive = "When played, destroy all 4 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
 
 class Bosacius:
      def __init__(self):
@@ -819,10 +819,10 @@ class Bosacius:
              self.type = "Character"
              self.element = "Electro"
              self.tag = "Adepti", "Yaksha"
-             self.cost = 4
+             self.cost = 6
              self.power = 500
              self.hp = 400
-             self.passive = "When played, destroy all 3 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
+             self.passive = "When played, destroy all 4 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
 
 class Solitary_Suanni:
      def __init__(self):
@@ -830,10 +830,10 @@ class Solitary_Suanni:
              self.type = "Character"
              self.element = "Anemo"
              self.tag = "Adepti"
-             self.cost = 3
+             self.cost = 4
              self.power = 400
              self.hp = 300
-             self.passive = "When played, destroy all 3 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
+             self.passive = "When played, destroy all 4 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
 
 class Xuanwen_Beast:
      def __init__(self):
@@ -844,7 +844,7 @@ class Xuanwen_Beast:
              self.cost = 1
              self.power = 250
              self.hp = 150
-             self.passive = "When played, destroy all 3 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
+             self.passive = "When played, destroy all 4 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
 
 class Xiangling:
      def __init__(self):
@@ -855,7 +855,7 @@ class Xiangling:
              self.cost = 1
              self.power = 150
              self.hp = 250
-             self.passive = "When played, destroy all 3 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
+             self.passive = "When played, destroy all 4 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
 
 class Guoba:
      def __init__(self):
@@ -866,17 +866,17 @@ class Guoba:
              self.cost = 1
              self.power = 200
              self.hp = 200
-             self.passive = "When played, destroy all 3 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
+             self.passive = "When played, destroy all 4 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
 
-class Seal_of_Permition:
+class Seal_of_Permission:
      def __init__(self):
-             self.name = "Seal of Permition"
+             self.name = "Seal of Permission"
              self.type = "Support"
              self.element = "Omni"
              self.tag = "Adepti"
              self.cost = 2
              
-             self.passive = "When played, destroy all 3 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
+             self.passive = "When played, destroy all 4 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
 
 class Guili_Assembly:
      def __init__(self):
@@ -884,9 +884,9 @@ class Guili_Assembly:
              self.type = "Support"
              self.element = "Omni"
              self.tag = "Adepti"
-             self.cost = 3
+             self.cost = 4
             
-             self.passive = "When played, destroy all 3 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
+             self.passive = "When played, destroy all 4 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
 
 class Karma:
      def __init__(self):
@@ -896,7 +896,7 @@ class Karma:
              self.tag = "Adepti"
              self.cost = 2
              
-             self.passive = "When played, destroy all 3 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power." 
+             self.passive = "When played, destroy all 4 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
 
 class Guizhong_Balista:
      def __init__(self):
@@ -904,9 +904,9 @@ class Guizhong_Balista:
              self.type = "Weapon"
              self.element = "Geo"
              self.tag = "Adepti"
-             self.cost = 4
+             self.cost = 6
              
-             self.passive = "When played, destroy all 3 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
+             self.passive = "When played, destroy all 4 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
 
 class Zibai:
      def __init__(self):
@@ -914,10 +914,10 @@ class Zibai:
              self.type = "Character"
              self.element = "Geo"
              self.tag = "Adepti", "Celestial", "Moonsign"
-             self.cost = 5
+             self.cost = 8
              self.power = 600
              self.hp = 400
-             self.passive = "When played, destroy all 3 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
+             self.passive = "When played, destroy all 4 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
 
 class Raiden_Ei:
      def __init__(self):
@@ -925,10 +925,10 @@ class Raiden_Ei:
              self.type = "Character"
              self.element = "Electro"
              self.tag = "Youkai", "Shogunate", "Celestial"
-             self.cost = 5
+             self.cost = 8
              self.power = 700
              self.hp = 300
-             self.passive = "When played, destroy all 3 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
+             self.passive = "When played, destroy all 4 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
 
 class Kappa:
      def __init__(self):
@@ -939,7 +939,7 @@ class Kappa:
              self.cost = 1
              self.power = 80
              self.hp = 320
-             self.passive = "When played, destroy all 3 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
+             self.passive = "When played, destroy all 4 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
 
 class Kujou_Sara:
      def __init__(self):
@@ -947,10 +947,10 @@ class Kujou_Sara:
              self.type = "Character"
              self.element = "Electro"
              self.tag = "Youkai", "Shogunate"
-             self.cost = 3
+             self.cost = 4
              self.power = 350
              self.hp = 350
-             self.passive = "When played, destroy all 3 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
+             self.passive = "When played, destroy all 4 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
 
 class Yae_Miko:
      def __init__(self):
@@ -958,10 +958,10 @@ class Yae_Miko:
              self.type = "Character"
              self.element = "Electro"
              self.tag = "Youkai", "Shrine Maiden", "Shogunate"
-             self.cost = 4
+             self.cost = 6
              self.power = 550
              self.hp = 350
-             self.passive = "When played, destroy all 3 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
+             self.passive = "When played, destroy all 4 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
 
 class Sasayuri:
      def __init__(self):
@@ -969,10 +969,10 @@ class Sasayuri:
              self.type = "Character"
              self.element = "Electro"
              self.tag = "Youkai", "Shogunate"
-             self.cost = 4
+             self.cost = 6
              self.power = 450
              self.hp = 450
-             self.passive = "When played, destroy all 3 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
+             self.passive = "When played, destroy all 4 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
 
 class Red_Oni:
      def __init__(self):
@@ -983,7 +983,7 @@ class Red_Oni:
              self.cost = 1
              self.power = 250
              self.hp = 150
-             self.passive = "When played, destroy all 3 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
+             self.passive = "When played, destroy all 4 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
 
 class Arataki_Itto:
      def __init__(self):
@@ -991,10 +991,10 @@ class Arataki_Itto:
              self.type = "Character"
              self.element = "Geo"
              self.tag = "Youkai", "Resistence"
-             self.cost = 3
+             self.cost = 4
              self.power = 450
              self.hp = 250
-             self.passive = "When played, destroy all 3 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
+             self.passive = "When played, destroy all 4 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
 
 class Blue_Oni:
      def __init__(self):
@@ -1005,7 +1005,7 @@ class Blue_Oni:
              self.cost = 1
              self.power = 150
              self.hp = 250
-             self.passive = "When played, destroy all 3 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
+             self.passive = "When played, destroy all 4 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
 
 class Ginkaku:
      def __init__(self):
@@ -1016,7 +1016,7 @@ class Ginkaku:
              self.cost = 1
              self.power = 200
              self.hp = 200
-             self.passive = "When played, destroy all 3 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
+             self.passive = "When played, destroy all 4 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
 
 class Bake_Danuke:
      def __init__(self):
@@ -1027,7 +1027,7 @@ class Bake_Danuke:
              self.cost = 1
              self.power = 150
              self.hp = 250
-             self.passive = "When played, destroy all 3 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
+             self.passive = "When played, destroy all 4 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
 
 class Ioroi:
      def __init__(self):
@@ -1035,10 +1035,10 @@ class Ioroi:
              self.type = "Character"
              self.element = "Geo"
              self.tag = "Youkai"
-             self.cost = 3
+             self.cost = 4
              self.power = 100
              self.hp = 500
-             self.passive = "When played, destroy all 3 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
+             self.passive = "When played, destroy all 4 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
 
 class Kitsune_Statue:
      def __init__(self):
@@ -1048,7 +1048,7 @@ class Kitsune_Statue:
              self.tag = "Youkai", "Shrine Maiden"
              self.cost = 2
              
-             self.passive = "When played, destroy all 3 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
+             self.passive = "When played, destroy all 4 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
 
 class Toukabou_Shigure:
      def __init__(self):
@@ -1058,7 +1058,7 @@ class Toukabou_Shigure:
              self.tag = "Youkai"
              self.cost = 2
              
-             self.passive = "When played, destroy all 3 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
+             self.passive = "When played, destroy all 4 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
 
 class Kamen:
     def __init__(self):
@@ -1069,37 +1069,37 @@ class Kamen:
             self.cost = 2
             self.power = 300
             self.hp = 200
-            self.passive = "When played, destroy all 3 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
+            self.passive = "When played, destroy all 4 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
 
 class Mussou_no_Hitotachi:
      def __init__(self):
                  self.name = "Mussou no Hitotachi"
-                 self.type = "Spell"
+                 self.type = "Support"
                  self.element = "Electro"
                  self.tag = "Youkai", "Shogunate"
                  self.cost = 6
                  
-                 self.passive = "When played, destroy all 3 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
+                 self.passive = "When played, destroy all 4 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
 
 class Aaru:
      def __init__(self):
                  self.name = "Aaru"
-                 self.type = "Spell"
+                 self.type = "Support"
                  self.element = "Dendro"
                  self.tag = "Seven Pillars"
-                 self.cost = 5
+                 self.cost = 8
                  
-                 self.passive = "When played, destroy all 3 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
+                 self.passive = "When played, destroy all 4 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
 
 class Golden_Slumber:
      def __init__(self):
                  self.name = "Golden Slumber"
-                 self.type = "Spell"
+                 self.type = "Support"
                  self.element = "Dendro"
                  self.tag = "Seven Pillars"
-                 self.cost = 4
+                 self.cost = 6
                  
-                 self.passive = "When played, destroy all 3 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
+                 self.passive = "When played, destroy all 4 or less cost cards from the field. While in the field, all *Abyssal cards have +200 power."
 
 class Nahida:
      def __init__(self):
@@ -1107,18 +1107,18 @@ class Nahida:
                  self.type = "Character"
                  self.element = "Dendro"
                  self.tag = "Seven Pillars", "Akademiya"
-                 self.cost = 5
+                 self.cost = 8
                  self.power = 600
                  self.hp = 400
                  self.passive = "When played, Draw 2 cards, Spells have their cost reduced by 2."
 
-class Toth:
+class Thoth:
      def __init__(self):
                  self.name = "Thoth"
                  self.type = "Character"
                  self.element = "Dendro"
-                 self.tag = "Seven Pillars", "Moonsgn"
-                 self.cost = 4
+                 self.tag = "Seven Pillars", "Moonsign"
+                 self.cost = 6
                  self.power = 500
                  self.hp = 300
                  self.passive = "When played, Draw 2 cards, Spells have their cost reduced by 2."
@@ -1129,7 +1129,7 @@ class Nefer:
                     self.type = "Character"
                     self.element = "Dendro"
                     self.tag = "Seven Pillars", "Agent", "Moonsign"
-                    self.cost = 3
+                    self.cost = 4
                     self.power = 400
                     self.hp = 200
                     self.passive = "When played, Reveal the 3 cards from the top of your deck, then, draw one of them and put the others on the bottom."
@@ -1140,7 +1140,7 @@ class Cyno:
                     self.type = "Character"
                     self.element = "Electro"
                     self.tag = "Seven Pillars", "Akademiya"
-                    self.cost = 4
+                    self.cost = 6
                     self.power = 400
                     self.hp = 400
                     self.passive = "When played, Reveal the 3 cards from the top of your deck, then, draw one of them and put the others on the bottom."
@@ -1151,7 +1151,7 @@ class Sethos:
                     self.type = "Character"
                     self.element = "Electro"
                     self.tag = "Seven Pillars"
-                    self.cost = 3
+                    self.cost = 4
                     self.power = 300
                     self.hp = 300
                     self.passive = "When played, Reveal the 3 cards from the top of your deck, then, draw one of them and put the others on the bottom."
@@ -1171,7 +1171,7 @@ class ASIMON:
                     self.type = "Character"
                     self.element = "Dendro"
                     self.tag = "Automaton", "Seven Pillars"
-                    self.cost = 3
+                    self.cost = 4
                     self.power = 300
                     self.hp = 400
                     self.passive = "When played, Reveal the 3 cards from the top of your deck, then, draw one of them and put the others on the bottom."
@@ -1215,7 +1215,7 @@ class Forbidden_Knowledge:
                     self.type = "Support"
                     self.element = "Dendro"
                     self.tag = "Seven Pillars", "Abyssal"
-                    self.cost = 4
+                    self.cost = 6
                     self.passive = "When played, Reveal the 3 cards from the top of your deck, then, draw one of them and put the others on the bottom."
 
 class Dehya:
@@ -1224,7 +1224,7 @@ class Dehya:
                     self.type = "Character"
                     self.element = "Pyro"
                     self.tag = "Seven Pillars", "Mercenary"
-                    self.cost = 3
+                    self.cost = 4
                     self.power = 300
                     self.hp = 400
                     self.passive = "When played, Reveal the 3 cards from the top of your deck, then, draw one of them and put the others on the bottom."
@@ -1246,7 +1246,7 @@ class Sandrone:
                     self.type = "Character"
                     self.element = "Cryo"
                     self.tag = "Automaton", "Fatui", "Narzissenkreuz", "Stellar"
-                    self.cost = 3
+                    self.cost = 4
                     self.power = 350
                     self.hp = 350
                     self.passive = "When played, Reveal the 3 cards from the top of your deck, then, draw one of them and put the others on the bottom."
@@ -1312,7 +1312,7 @@ class Suppression_Specialist_Mek:
                     self.type = "Character"
                     self.element = "Electro"
                     self.tag = "Automaton", "Aekhe", "Court of Fontaine"
-                    self.cost = 3
+                    self.cost = 4
                     self.power = 300
                     self.hp = 200
                     self.passive = "When played, Reveal the 3 cards from the top of your deck, then, draw one of them and put the others on the bottom."
@@ -1334,7 +1334,7 @@ class Mechaniozed_Fortress:
                     self.type = "Character"
                     self.element = "Pyro"
                     self.tag = "Automaton", "Fatui"
-                    self.cost = 4
+                    self.cost = 6
                     self.power = 350
                     self.hp = 650
                     self.passive = "When played, Reveal the 3 cards from the top of your deck, then, draw one of them and put the others on the bottom."
@@ -1345,7 +1345,7 @@ class Fontaine_Research_Institute:
                     self.type = "Support"
                     self.element = "Hydro"
                     self.tag = "Automaton", "Court of Fontaine"
-                    self.cost = 3
+                    self.cost = 4
                     self.passive = "When played, Reveal the 3 cards from the top of your deck, then, draw one of them and put the others on the bottom."
 
 class Scrap_Robots:
@@ -1365,7 +1365,7 @@ class Pulonia:
                     self.type = "Character"
                     self.element = "Cryo"
                     self.tag = "Automaton", "Fatui", "Narzissenkreuz"
-                    self.cost = 5
+                    self.cost = 8
                     self.power = 500
                     self.hp = 500
                     self.passive = "When played, Reveal the 3 cards from the top of your deck, then, draw one of them and put the others on the bottom."
@@ -1376,7 +1376,7 @@ class Fagio:
                     self.type = "Character"
                     self.element = "Cryo"
                     self.tag = "Automaton", "Fatui", "Narzissenkreuz"
-                    self.cost = 5
+                    self.cost = 8
                     self.power = 600
                     self.hp = 400
                     self.passive = "When played, Reveal the 3 cards from the top of your deck, then, draw one of them and put the others on the bottom."
@@ -1387,7 +1387,7 @@ class World_Formula:
                     self.type = "Support"
                     self.element = "Cryo"
                     self.tag = "Narzissenkreuz"
-                    self.cost = 4
+                    self.cost = 6
                     self.passive = "When played, Reveal the 3 cards from the top of your deck, then, draw one of them and put the others on the bottom."
 
 class Garde:
@@ -1407,7 +1407,7 @@ class Citlali:
                     self.type = "Character"
                     self.element = "Cryo"
                     self.tag = "Heroes", "Masters of the Night Wind", "Astrology"
-                    self.cost = 4
+                    self.cost = 6
                     self.power = 350
                     self.hp = 350
                     self.passive = "This card can't be removed by spells. When played, Reveal the 4 cards from the top of your deck, then, draw one Masters of the Night Wind card. If this card is revealed in the deck, play this card without paying the cost."
@@ -1418,7 +1418,7 @@ class Mavuika:
                     self.type = "Character"
                     self.element = "Pyro"
                     self.tag = "Heroes", "Celestial"
-                    self.cost = 5
+                    self.cost = 8
                     self.power = 700
                     self.hp = 300
                     self.passive = "When played, Deals 500 damage to all enemy cards. Heroes cards have thei power increased by 150."
@@ -1432,7 +1432,7 @@ class Ororon:
                     self.cost = 2
                     self.power = 300
                     self.hp = 100
-                    self.passive = "When played, Reveal the 3 cards from the top of your deck, then, draw one Masters of the Night Wind card. When this is in the discard pile, once per turn, gain one energy."
+                    self.passive = "When played, Reveal the 3 cards from the top of your deck, then, draw one Masters of the Night Wind card. When this is in the discard pile, once per turn, gain one cost."
 
 class Capitano:
         def __init__(self):
@@ -1440,7 +1440,7 @@ class Capitano:
                     self.type = "Character"
                     self.element = "Cryo"
                     self.tag = "Masters of the Night Wind", "Fatui"
-                    self.cost = 5
+                    self.cost = 8
                     self.power = 500
                     self.hp = 500
                     self.passive = "For each spell card in the discard pile, increase power by 50. If this card is revealed in the deck, draw this card. If this card is sent to the discard pile, after one turn, draw this card."
@@ -1462,7 +1462,7 @@ class Tlapo:
                     self.type = "Character"
                     self.element = "Cryo"
                     self.tag = "Dragon", "Masters of the Night Wind"
-                    self.cost = 3
+                    self.cost = 4
                     self.power = 300
                     self.hp = 300
                     self.passive = "When played, Reveal the 3 cards from the top of your deck, then, draw one Masters of the Night Wind card. This card can be played by paying 1 less cost to diseable a spell."
@@ -1473,7 +1473,7 @@ class Biram:
                     self.type = "Character"
                     self.element = "Cryo"
                     self.tag = "Heroes", "Masters of the Night Wind", "Astrology"
-                    self.cost = 3
+                    self.cost = 4
                     self.power = 300
                     self.hp = 300
                     self.passive = "When played, Reveal the 3 cards from the top of your deck, then, draw one of them and put the others on the bottom."
@@ -1484,7 +1484,7 @@ class Nightkingdom:
                     self.type = "Support"
                     self.element = "Omni"
                     self.tag = "Heroes"
-                    self.cost = 4
+                    self.cost = 6
                     self.passive = "While active, you can put a card in the discard pile in the bottom of the deck to negate a spell."
 
 class Acient_Name:
@@ -1502,7 +1502,7 @@ class Wyob:
                     self.type = "Character"
                     self.element = "Cryo"
                     self.tag = "Heroes", "Celestial", "Masters of the Night Wind"
-                    self.cost = 4
+                    self.cost = 6
                     self.power = 400
                     self.hp = 400
                     self.passive = "When played, search for an Ancient Name and than draw it. While in the discard pile, negate one spell per turn."
@@ -1513,7 +1513,7 @@ class Obsidian_Pillar:
                     self.type = "Support"
                     self.element = "Omni"
                     self.tag = "Heroes"
-                    self.cost = 3
+                    self.cost = 4
                     self.passive = "While active, reveal the top card of your deck."
 
 class Nightsoul_Blessing:
@@ -1531,7 +1531,7 @@ class Name_Fishing:
                     self.type = "Support"
                     self.element = "Omni"
                     self.tag = "Heroes"
-                    self.cost = 3
+                    self.cost = 4
                     self.passive = "When played, search for an Ancient Name and then draw it."
 
 class Ode_of_Ressurection:
@@ -1540,7 +1540,7 @@ class Ode_of_Ressurection:
                     self.type = "Support"
                     self.element = "Omni"
                     self.tag = "Heroes"
-                    self.cost = 5
+                    self.cost = 8
                     self.passive = "All Heroes characters that are destroyed go back to the field with the effect of Nightsoul Blessing. This effect duration is 3 turns."
 
 class Spiritspeaker_Warrior:
@@ -1570,7 +1570,7 @@ class Spiritspeaker_State:
                     self.name = "Spiritspeaker State"
                     self.type = "Support"
                     self.element = "Cryo"
-                    self.tag = "Heroes"
+                    self.tag = "Heroes", "Masters of the Night Wind"
                     self.cost = 2
                     self.passive = "When played, Reveal the 3 cards from the top of your deck, then, draw one of them and put the others on the bottom."
 
@@ -1579,7 +1579,7 @@ class Nightspirit_Graffiti:
                     self.name = "Nightspirit Graffiti"
                     self.type = "Support"
                     self.element = "Cryo"
-                    self.tag = "Heroes"
+                    self.tag = "Heroes", "Masters of the Night Wind"
                     self.cost = 2
                     self.passive = "When played, Reveal the 3 cards from the top of your deck, then, draw one of them and put the others on the bottom."
 
@@ -1589,7 +1589,7 @@ class Phlogistum:
                     self.type = "Support"
                     self.element = "Pyro"
                     self.tag = "Heroes", "Dragon"
-                    self.cost = 3
+                    self.cost = 4
                     self.passive = "When played, Reveal the 3 cards from the top of your deck, then, draw one of them and put the others on the bottom."
 
 class Baby_Iktomisaurus:
@@ -1609,7 +1609,7 @@ class Lauma:
                     self.type = "Character"
                     self.element = "Dendro"
                     self.tag = "WildLife", "Moonsign", "Frostmoon"
-                    self.cost = 3
+                    self.cost = 4
                     self.power = 300
                     self.hp = 300
                     self.passive = "When played, Reveal the 3 cards from the top of your deck, then, draw one of them and put the others on the bottom."
@@ -1620,7 +1620,7 @@ class Columbina:
                     self.type = "Character"
                     self.element = "Hydro"
                     self.tag = "WildLife", "Moonsign", "Frostmoon", "Fatui"
-                    self.cost = 5
+                    self.cost = 8
                     self.power = 500
                     self.hp = 500
                     self.passive = "When played, Reveal the 3 cards from the top of your deck, then, draw one of them and put the others on the bottom."
@@ -1653,7 +1653,7 @@ class Radiant_Moonfly:
                     self.type = "Character"
                     self.element = "Dendro"
                     self.tag = "WildLife", "Moonsign"
-                    self.cost = 4
+                    self.cost = 6
                     self.power = 350
                     self.hp = 250
                     self.passive = "When played, Reveal the 3 cards from the top of your deck, then, draw one of them and put the others on the bottom."
@@ -1675,7 +1675,7 @@ class Elder_Leshy:
                     self.type = "Character"
                     self.element = "Dendro"
                     self.tag = "WildLife", "Fae"
-                    self.cost = 3
+                    self.cost = 4
                     self.power = 300
                     self.hp = 400
                     self.passive = "When played, Reveal the 3 cards from the top of your deck, then, draw one of them and put the others on the bottom."
@@ -1752,7 +1752,7 @@ class Wrath_of_the_Forest:
                     self.type = "Support"
                     self.element = "Dendro"
                     self.tag = "WildLife", "Moonsign"
-                    self.cost = 3
+                    self.cost = 4
                     self.passive = "When played, Reveal the 3 cards from the top of your deck, then, draw one of them and put the others on the bottom."
 
 class Moonglow_Fireflly:
@@ -1792,7 +1792,7 @@ class Imprision:
                     self.type = "Support"
                     self.element = "Dendro"
                     self.tag = "WildLife"
-                    self.cost = 3
+                    self.cost = 4
                     self.passive = "When played, Reveal the 3 cards from the top of your deck, then, draw one of them and put the others on the bottom."
 
 class Moon_Prayer:
@@ -1821,7 +1821,7 @@ class Pierro:
                     self.type = "Character"
                     self.element = "Electro"
                     self.tag = "Fatui", "Astrology"
-                    self.cost = 4
+                    self.cost = 6
                     self.power = 500
                     self.hp = 300
                     self.passive = "When played, Reveal the 3 cards from the top of your deck, then, draw one of them and put the others on the bottom."
@@ -1832,7 +1832,7 @@ class Lumi:
                     self.type = "Character"
                     self.element = "Geo"
                     self.tag = "Fae", "Adventure", "Moonsign"
-                    self.cost = 3
+                    self.cost = 4
                     self.power = 400
                     self.hp = 200
                     self.passive = "When played, Reveal the 3 cards from the top of your deck, then, draw one of them and put the others on the bottom."
@@ -1854,7 +1854,7 @@ class Vodyanitsa:
                     self.type = "Character"
                     self.element = "Hydro"
                     self.tag = "Fae", "Rebel"
-                    self.cost = 3
+                    self.cost = 4
                     self.power = 400
                     self.hp = 300
                     self.passive = "When played, Reveal the 3 cards from the top of your deck, then, draw one of them and put the others on the bottom."
@@ -1874,7 +1874,7 @@ class Flins:
                     self.type = "Character"
                     self.element = "Electro"
                     self.tag = "Fae", "Lightkeeper", "Moonsign"
-                    self.cost = 4
+                    self.cost = 6
                     self.power = 500
                     self.hp = 400
                     self.passive = "When played, Reveal the 3 cards from the top of your deck, then, draw one of them and put the others on the bottom."
@@ -1907,7 +1907,7 @@ class Mitachurl_BlazingAxe:
                     self.type = "Character"
                     self.element = "Pyro"
                     self.tag = "Hilichurl"
-                    self.cost = 3
+                    self.cost = 4
                     self.power = 400
                     self.hp = 300
                     self.passive = "When played, Reveal the 3 cards from the top of your deck, then, draw one of them and put the others on the bottom."
@@ -1940,7 +1940,7 @@ class Hilichurl_Camp:
                     self.type = "Support"
                     self.element = "Geo"
                     self.tag = "Hilichurl"
-                    self.cost = 3
+                    self.cost = 4
                     self.passive = "When played, Reveal the 3 cards from the top of your deck, then, draw one of them and put the others on the bottom."
 
 class Curse_of_Wilderness:
@@ -1949,7 +1949,7 @@ class Curse_of_Wilderness:
                     self.type = "Support"
                     self.element = "Omni"
                     self.tag = "Hilichurl", "Celestial"
-                    self.cost = 5
+                    self.cost = 8
                     self.passive = "When played, Reveal the 3 cards from the top of your deck, then, draw one of them and put the others on the bottom."
 
 class Geo_Lawachurl:
@@ -1958,7 +1958,7 @@ class Geo_Lawachurl:
                     self.type = "Character"
                     self.element = "Geo"
                     self.tag = "Hilichurl"
-                    self.cost = 5
+                    self.cost = 8
                     self.power = 600
                     self.hp = 400
                     self.passive = "When played, Reveal the 3 cards from the top of your deck, then, draw one of them and put the others on the bottom."
@@ -1991,7 +1991,7 @@ class Final_Rest:
                     self.type = "Support"
                     self.element = "Omni"
                     self.tag = "Hilichurl"
-                    self.cost = 4
+                    self.cost = 6
                     self.passive = "When played, Reveal the 3 cards from the top of your deck, then, draw one of them and put the others on the bottom."
 
 class Churlcric:
@@ -2000,7 +2000,7 @@ class Churlcric:
                     self.type = "Character"
                     self.element = "Geo"
                     self.tag = "Hilichurl"
-                    self.cost = 5
+                    self.cost = 8
                     self.power = 500
                     self.hp = 500
                     self.passive = "When played, Reveal the 3 cards from the top of your deck, then, draw one of them and put the others on the bottom."
@@ -2020,7 +2020,7 @@ class Totem:
                     self.type = "Support"
                     self.element = "Omni"
                     self.tag = "Hilichurl"
-                    self.cost = 3
+                    self.cost = 4
                     self.passive = "When played, Reveal the 3 cards from the top of your deck, then, draw one of them and put the others on the bottom."
 
 class Furina:
@@ -2062,7 +2062,7 @@ class Mademoiselle_Crabaletta:
                     self.type = "Character"
                     self.element = "Hydro"
                     self.tag = "Court of Fontaine", "Oceanid", "WildLife"
-                    self.cost = 3
+                    self.cost = 4
                     self.power = 200
                     self.hp = 300
                     self.passive = "When played, Reveal the 3 cards from the top of your deck, then, draw one of them and put the others on the bottom."
@@ -2073,7 +2073,7 @@ class Hydro_Tulpa:
                     self.type = "Character"
                     self.element = "Hydro"
                     self.tag = "Oceanid", "Elemental"
-                    self.cost = 4
+                    self.cost = 6
                     self.power = 400
                     self.hp = 400
                     self.passive = "When played, Reveal the 3 cards from the top of your deck, then, draw one of them and put the others on the bottom."
@@ -2084,7 +2084,7 @@ class Oceanid:
                     self.type = "Character"
                     self.element = "Hydro"
                     self.tag = "Oceanid", "Elemental"
-                    self.cost = 4
+                    self.cost = 6
                     self.power = 300
                     self.hp = 500
                     self.passive = "When played, Reveal the 3 cards from the top of your deck, then, draw one of them and put the others on the bottom."
@@ -2115,7 +2115,7 @@ class Koholasaurus:
                     self.type = "Character"
                     self.element = "Hydro"
                     self.tag = "Dragon", "People of the Springs"
-                    self.cost = 3
+                    self.cost = 4
                     self.power = 300
                     self.hp = 400
                     self.passive = "When played, Reveal the 3 cards from the top of your deck, then, draw one of them and put the others on the bottom."
@@ -2148,7 +2148,7 @@ class Geo_Vishap:
                     self.type = "Character"
                     self.element = "Geo"
                     self.tag = "Dragon"
-                    self.cost = 3
+                    self.cost = 4
                     self.power = 300
                     self.hp = 400
                     self.passive = "When played, Reveal the 3 cards from the top of your deck, then, draw one of them and put the others on the bottom."
@@ -2159,7 +2159,7 @@ class Dottore_20:
                     self.type = "Character"
                     self.element = "Dendro"
                     self.tag = "Fatui", "Automaton", "Moonsign"
-                    self.cost = 3
+                    self.cost = 4
                     self.power = 400
                     self.hp = 300
                     self.passive = "When played, Reveal the 3 cards from the top of your deck, then, draw one of them and put the others on the bottom."
@@ -2200,7 +2200,7 @@ class Ying_ier:
                     self.name = "Ying'ier"
                     self.type = "Character"
                     self.element = "Dendro"
-                    self.tag = "Lyue Qingxi", "Alchemy"
+                    self.tag = "Liyue Qixing", "Alchemy"
                     self.cost = 1
                     self.power = 150
                     self.hp = 150
@@ -2243,7 +2243,7 @@ class Frost_Operative:
                     self.type = "Character"
                     self.element = "Cryo"
                     self.tag = "Fatui", "House of the Hearth"
-                    self.cost = 3
+                    self.cost = 4
                     self.power = 400
                     self.hp = 200
                     self.passive = "When played, Reveal the 3 cards from the top of your deck, then, draw one of them and put the others on the bottom."
@@ -2265,7 +2265,7 @@ class Arlecchino:
                     self.type = "Character"
                     self.element = "Pyro"
                     self.tag = "Fatui", "House of the Hearth", "Frostmoon"
-                    self.cost = 5
+                    self.cost = 8
                     self.power = 600
                     self.hp = 400
                     self.passive = "When played, Reveal the 3 cards from the top of your deck, then, draw one of them and put the others on the bottom."
@@ -2308,7 +2308,7 @@ class Anemo_Sigil:
                     self.name = "Anemo Sigil"
                     self.type = "Support"
                     self.element = "Anemo"
-                    self.tag = "Moonsign"
+                    self.tag = "Elemental"
                     self.cost = 2
                     self.passive = "When played, Reveal the 3 cards from the top of your deck, then, draw one of them and put the others on the bottom."
 
@@ -2372,7 +2372,7 @@ class Elemental_Ressonance:
                     self.type = "Support"
                     self.element = "Omni"
                     self.tag = "Elemental"
-                    self.cost = 3
+                    self.cost = 4
                     self.passive = "When played, Reveal the 3 cards from the top of your deck, then, draw one of them and put the others on the bottom."
 
 class Leyline_Overflow:
@@ -2579,7 +2579,7 @@ class Polar_Star_Edict_Mandate:
                     self.type = "Support"
                     self.element = "Omni"
                     self.tag = "Stellar"
-                    self.cost = 3
+                    self.cost = 4
                     self.passive = "When played, increase the power of all *Stellar cards in your field by 200."
  
 
@@ -2627,7 +2627,7 @@ st01_cards = [
     Xuanwen_Beast,  # C
     Xiangling,  # C
     Guoba,  # C
-    Seal_of_Permition,  # C
+    Seal_of_Permission,  # C
     Guili_Assembly,  # C
     Karma,  # C
     Guizhong_Balista,  # R
@@ -2650,7 +2650,7 @@ st01_cards = [
     Aaru,  # R
     Golden_Slumber,  # R
     Nahida,  # UR
-    Toth,  # R
+    Thoth,  # R
     Nefer,  # SR
     Cyno,  # R
     Sethos,  # C
@@ -2845,5 +2845,4 @@ deck2 = [
     abyssDeck[16](), abyssDeck[16](),  # 3x Ruin_Destroyer_Serpent
     abyssDeck[17](),  # 2x Elynas  
     ]
-
 

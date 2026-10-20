@@ -15,10 +15,10 @@ class Bakunawa:
         self.type = "Character"
         self.element = "Cryo"
         self.tag =  "Abyssal", "Alchemy"
-        self.cost = 5
+        self.cost = 8
         self.power = 500
         self.hp = 500
-        self.passive = "When played by Transmutation, Destroy one 4 cost or less characters. While on the field, all 3 or less cost characters have their power reduced to 50"
+        self.passive = "When played by Transmutation, Destroy one 6 cost or less characters. While on the field, all 4 or less cost characters have their power reduced to 50"
 
 class Baby_Rifthound:
     def __init__(self):
@@ -37,7 +37,7 @@ class Belyi_Tsar:
         self.type = "Character"
         self.element = "Cryo"
         self.tag = "Celestial", "Alchemy", "Fae", "Dragon"
-        self.cost = 4
+        self.cost = 6
         self.power = 400
         self.hp = 400
         self.passive = "When played by Transmutation, Increase cost by 1 and power by 250. On play, Draw 1 card and freeze an amount of oponent charactes based on the cost of the card drawn for one turn"
@@ -48,10 +48,10 @@ class Durin:
         self.type = "Character"
         self.element = "Pyro"
         self.tag = "Abyssal", "Hexerei", "Alchemy", "Dragon", "Feiry Tale"
-        self.cost = 4
+        self.cost = 6
         self.power = 550
         self.hp = 350
-        self.passive = "When played by Transmutation, Delete one 4 or less cost character from the oponent field. At the start of any turn, reduce the first spell cast by 2"
+        self.passive = "When played by Transmutation, Delete one 6 or less cost character from the oponent field. At the start of any turn, reduce the first spell cast by 2"
 
 class The_Primordial_Human:
     def __init__(self):
@@ -62,15 +62,15 @@ class The_Primordial_Human:
         self.cost = 10
         self.power = 1000
         self.hp = 1000
-        self.passive = "Can only be played by transmutation. On play, disable all spells from the oponent's field. Reduce all *Alchemy cards cost by 4. At the start of the turn, Reduce one oponent character power to 0"
+        self.passive = "Can only be played by transmutation. On play, disable all spells from the oponent's field. Reduce all *Alchemy cards cost by 6. At the start of the turn, Reduce one oponent character power to 0"
 
 class Primordial_Human_Project:
     def __init__(self):
         self.name = "Primordial Human Project"
-        self.type = "Spell"
+        self.type = "Support"
         self.element = "Omni"
         self.tag = "Alchemy"
-        self.cost = 3
+        self.cost = 4
     
         self.passive = "Play one *Alchemy card from the discard pile via Transmutation. Gain one Energy"
 
@@ -80,7 +80,7 @@ class Aksinya:
         self.type = "Character"
         self.element = "Cryo"
         self.tag = "Alchemy"
-        self.cost = 3
+        self.cost = 4
         self.power = 300
         self.hp = 300
         self.passive = "When Played, Draw a Belyi Tsar. When playing a Belyi Tsar, Draw this card from the discard pile, then, use Transmutation"
@@ -88,7 +88,7 @@ class Aksinya:
 class The_Shadow_Realm:
     def __init__(self):
         self.name = "The Shadow Realm"
-        self.type = "Spell"
+        self.type = "Support"
         self.element = "Omni"
         self.tag = "Stellar", "Alchemy"
         self.cost = 2
@@ -109,7 +109,7 @@ class Subject_01:
 class Durin_Remains:
     def __init__(self):
         self.name = "Durin Remains"
-        self.type = "Spell"
+        self.type = "Support"
         self.element = "Pyro"
         self.tag = "Abyssal", "Alchemy"
         self.cost = 2
@@ -119,7 +119,7 @@ class Durin_Remains:
 class Alchemy_Bench:
     def __init__(self):
         self.name = "Alchemy Bench"
-        self.type = "Spell"
+        self.type = "Support"
         self.element = "Omni"
         self.tag = "Alchemy"
         self.cost = 1
@@ -151,7 +151,7 @@ class Timaeus:
 class Elemental_Gemstones:
     def __init__(self):
         self.name = "Elemental Gemstones"
-        self.type = "Spell"
+        self.type = "Support"
         self.element = "Omni"
         self.tag = "Alchemy", "Elemental"
         self.cost = 1
@@ -161,10 +161,10 @@ class Elemental_Gemstones:
 class Tranmutation_Circle:
     def __init__(self):
         self.name = "Transmutation Circle"
-        self.type = "Spell"
+        self.type = "Support"
         self.element = "Geo"
         self.tag = "Alchemy"
-        self.cost = 3
+        self.cost = 4
         
         self.passive = "use Transmutation to play an character from the discard pile"
 
@@ -174,7 +174,7 @@ class Imortal_Construct:
         self.type = "Character"
         self.element = "Pyro"
         self.tag = "Alchemy"
-        self.cost = 4
+        self.cost = 6
         self.power = 500
         self.hp = 300
         self.passive = "When played by Transmutation, use Transmutation to play a card from your hand. When using Transmutation, this card gets an extra attack"
@@ -229,7 +229,7 @@ class Chimeric_Horned_Bear:
         self.type = "Character"
         self.element = "Pyro"
         self.tag = "Alchemy"
-        self.cost = 3
+        self.cost = 4
         self.power = 200
         self.hp = 400
         self.passive = "When played by Transmutation, increase this card power by 300. When destroyed, destroy an 2 cost or less character from the opponent field"
@@ -240,7 +240,7 @@ class Venessa:
         self.type = "Character"
         self.element = "Anemo"
         self.tag = "Knights of Favonius", "Four Winds", "Heroes"
-        self.cost = 3
+        self.cost = 4
         self.power = 200
         self.hp = 200
         self.passive = "When played, Destroy a total of 10 cost from your field or hand to play units up to 10 cost from hand, deck or discard pile."
@@ -251,7 +251,7 @@ class Dvalin:
         self.type = "Character"
         self.element = "Anemo"
         self.tag = "Four Winds", "Hexerei", "Dragon"
-        self.cost = 4
+        self.cost = 6
         self.power = 200
         self.hp = 200
         self.passive = "When played, Destroy a total of 10 cost from your field or hand to play units up to 10 cost from hand, deck or discard pile."
@@ -259,7 +259,7 @@ class Dvalin:
 class Corrupted_Tears:
     def __init__(self):
         self.name = "Corrupted tears"
-        self.type = "Spell"
+        self.type = "Support"
         self.element = "Anemo"
         self.tag = "Abyssal", "Four Winds", "Dragon", "Hexerei"
         self.cost = 2
@@ -306,7 +306,7 @@ class Wolfs_Gravestone:
         self.type = "Weapon"
         self.element = "Anemo"
         self.tag = "Wolvendom", "Four Winds"
-        self.cost = 4
+        self.cost = 6
         self.power = 200
         self.hp = 200
         self.passive = "When played, Destroy a total of 10 cost from your field or hand to play units up to 10 cost from hand, deck or discard pile."
@@ -317,7 +317,7 @@ class Jean:
         self.type = "Character"
         self.element = "Anemo"
         self.tag = "Knights of Favonius", "Four Winds"
-        self.cost = 3
+        self.cost = 4
         self.power = 200
         self.hp = 200
         self.passive = "When played, Destroy a total of 10 cost from your field or hand to play units up to 10 cost from hand, deck or discard pile."
@@ -383,7 +383,7 @@ class Il_Dottore_Omega_Builda:
         self.type = "Character"
         self.element = "Dendro"
         self.tag = "Fatui", "Automaton", "Moonsign"
-        self.cost = 5
+        self.cost = 8
         self.power = 200
         self.hp = 200
         self.passive = "When played, Destroy a total of 10 cost from your field or hand to play units up to 10 cost from hand, deck or discard pile."
@@ -406,7 +406,7 @@ class Il_Dottore_27:
         self.type = "Character"
         self.element = "Anemo"
         self.tag = "Fatui", "Automaton", "Moonsign"
-        self.cost = 3
+        self.cost = 4
         self.power = 200
         self.hp = 200
         self.passive = "When played, Destroy a total of 10 cost from your field or hand to play units up to 10 cost from hand, deck or discard pile."
@@ -417,7 +417,7 @@ class Diluc:
         self.type = "Character"
         self.element = "Pyro"
         self.tag = "Agent", "Knights of Favonius"
-        self.cost = 3
+        self.cost = 4
         self.power = 200
         self.hp = 200
         self.passive = "When played, Destroy a total of 10 cost from your field or hand to play units up to 10 cost from hand, deck or discard pile."
@@ -436,10 +436,10 @@ class Crepus:
 class Forbidden_Knowladge_Capsule:
     def __init__(self):
         self.name = "Forbidden Knowladge Capsule"
-        self.type = "Spell"
+        self.type = "Support"
         self.element = "Dendro"
         self.tag = "Akademiya", "Seven Pillars", "Abyssal"
-        self.cost = 4
+        self.cost = 6
         
         self.passive = "When played, Destroy a total of 10 cost from your field or hand to play units up to 10 cost from hand, deck or discard pile."
 
@@ -449,7 +449,7 @@ class Apep:
         self.type = "Character"
         self.element = "Dendro"
         self.tag = "Dragon", "Sovereign", "Seven Pillars"
-        self.cost = 5
+        self.cost = 8
         self.power = 200
         self.hp = 200
         self.passive = "When played, Destroy a total of 10 cost from your field or hand to play units up to 10 cost from hand, deck or discard pile."
@@ -460,7 +460,7 @@ class Guardian_of_the_Oasis:
         self.type = "Character"
         self.element = "Dendro"
         self.tag = "Dragon", "Seven Pillars"
-        self.cost = 4
+        self.cost = 6
         self.power = 200
         self.hp = 200
         self.passive = "When played, Destroy a total of 10 cost from your field or hand to play units up to 10 cost from hand, deck or discard pile."
@@ -479,27 +479,27 @@ class Faruzan:
 class Eleazar:
     def __init__(self):
         self.name = "Eleazar"
-        self.type = "Spell"
+        self.type = "Support"
         self.element = "Dendro"
         self.tag = "Abyssal", "Seven Pillars"
-        self.cost = 3
+        self.cost = 4
         
         self.passive = "When played, Destroy a total of 10 cost from your field or hand to play units up to 10 cost from hand, deck or discard pile."
 
 class Irminsul:
     def __init__(self):
         self.name = "Irminsul"
-        self.type = "Spell"
+        self.type = "Support"
         self.element = "Dendro"
         self.tag = "Elemental", "Akademiya", "Celestial"
-        self.cost = 5
+        self.cost = 8
         
         self.passive = "When played, Destroy a total of 10 cost from your field or hand to play units up to 10 cost from hand, deck or discard pile."
 
 class Corrupted_Data:
     def __init__(self):
         self.name = "Corrupted Data"
-        self.type = "Spell"
+        self.type = "Support"
         self.element = "Dendro"
         self.tag = "Automaton", "Seven Pillars"
         self.cost = 2
@@ -512,7 +512,7 @@ class Crimmson_Moon_Marrow:
         self.type = "Weapon"
         self.element = "Pyro"
         self.tag = "Moonsign", "Frostmoon", "Abyssal", "Crimson Moon Dynasty"
-        self.cost = 3
+        self.cost = 4
         
         self.passive = "When played, Destroy a total of 10 cost from your field or hand to play units up to 10 cost from hand, deck or discard pile."
 
@@ -522,7 +522,7 @@ class Eternal_Moon_Marrow:
         self.type = "Weapon"
         self.element = "Dendro"
         self.tag = "Moonsign", "Frostmoon"
-        self.cost = 4
+        self.cost = 6
        
         self.passive = "When played, Destroy a total of 10 cost from your field or hand to play units up to 10 cost from hand, deck or discard pile."
 
@@ -532,17 +532,17 @@ class Artificial_Moon_Marrow:
         self.type = "Weapon"
         self.element = "Anemo"
         self.tag = "Moonsign", "Automaton"
-        self.cost = 5
+        self.cost = 8
         
         self.passive = "When played, Destroy a total of 10 cost from your field or hand to play units up to 10 cost from hand, deck or discard pile."
 
 class Dark_Side_of_the_Moon:
     def __init__(self):
         self.name = "Dark Side of the Moon"
-        self.type = "Spell"
+        self.type = "Support"
         self.element = "Hydro"
         self.tag = "Dragon", "Frostmoon", "Moonsign"
-        self.cost = 4
+        self.cost = 6
         
         self.passive = "When played, Destroy a total of 10 cost from your field or hand to play units up to 10 cost from hand, deck or discard pile."
 
@@ -571,10 +571,10 @@ class Luonnotar:
 class Trilunar_Authority:
     def __init__(self):
         self.name = "Trilunar Authority"
-        self.type = "Spell"
+        self.type = "Support"
         self.element = "Omini"
         self.tag = "Moonsign", "Frostmoon"
-        self.cost = 5
+        self.cost = 8
         
         self.passive = "When played, Destroy a total of 10 cost from your field or hand to play units up to 10 cost from hand, deck or discard pile."
 
@@ -603,7 +603,7 @@ class Primal_Construct_Reshaper:
 class Replicators_Keysttone:
     def __init__(self):
         self.name = "Replicator's Keystone"
-        self.type = "Spell"
+        self.type = "Support"
         self.element = "Dendro"
         self.tag = "Authomaton", "Seven Pillars"
         self.cost = 1
@@ -613,7 +613,7 @@ class Replicators_Keysttone:
 class Moon_Fragments:
     def __init__(self):
         self.name = "Moon Fragments"
-        self.type = "Spell"
+        self.type = "Support"
         self.element = "Omni"
         self.tag = "Moonsign", "Frostmoon"
         self.cost = 2
@@ -645,10 +645,10 @@ class Ashru:
 class Chessboard_of_Secrets:
     def __init__(self):
         self.name = "Chessboard of Secrets"
-        self.type = "Spell"
+        self.type = "Support"
         self.element = "Dendro"
         self.tag = "Agent", "Moonsign", "Seven Pillars"
-        self.cost = 4
+        self.cost = 6
         self.power = 200
         self.hp = 200
         self.passive = "When played, Destroy a total of 10 cost from your field or hand to play units up to 10 cost from hand, deck or discard pile."
@@ -659,7 +659,7 @@ class Bennu:
         self.type = "Character"
         self.element = "Pyro"
         self.tag = "Authomaton", "Seven Pillars"
-        self.cost = 3
+        self.cost = 4
         self.power = 200
         self.hp = 200
         self.passive = "When played, Destroy a total of 10 cost from your field or hand to play units up to 10 cost from hand, deck or discard pile."
@@ -670,7 +670,7 @@ class Tenoch:
         self.type = "Character"
         self.element = "Pyro"
         self.tag = "Heroes"
-        self.cost = 3
+        self.cost = 4
         self.power = 200
         self.hp = 200
         self.passive = "When played, Destroy a total of 10 cost from your field or hand to play units up to 10 cost from hand, deck or discard pile."
@@ -681,7 +681,7 @@ class Enjou:
         self.type = "Character"
         self.element = "Pyro"
         self.tag = "Abyssal", "Heroes"
-        self.cost = 4
+        self.cost = 6
         self.power = 200
         self.hp = 200
         self.passive = "When played, Destroy a total of 10 cost from your field or hand to play units up to 10 cost from hand, deck or discard pile."
@@ -689,7 +689,7 @@ class Enjou:
 class Mare_Jivari:
     def __init__(self):
         self.name = "Meré Jivari"
-        self.type = "Spell"
+        self.type = "Support"
         self.element = "Pyro"
         self.tag = "Heroes", "Abyssal"
         self.cost = 2
@@ -702,7 +702,7 @@ class Alhaitham:
         self.type = "Character"
         self.element = "Dendro"
         self.tag = "Akademiya", "Seven Pillars"
-        self.cost = 3
+        self.cost = 4
         self.power = 200
         self.hp = 200
         self.passive = "When played, Destroy a total of 10 cost from your field or hand to play units up to 10 cost from hand, deck or discard pile."
@@ -735,7 +735,7 @@ class Sanhaj:
         self.type = "Character"
         self.element = "Cryo"
         self.tag = "Masters of the Night Wind", "Heroes"
-        self.cost = 3
+        self.cost = 4
         self.power = 200
         self.hp = 200
         self.passive = "When played, Destroy a total of 10 cost from your field or hand to play units up to 10 cost from hand, deck or discard pile."
@@ -809,7 +809,7 @@ class Hydro_Mimic_Crab:
 class Water_From_the_Primordial_Sea:
     def __init__(self):
         self.name = "Water From the Primordial Sea"
-        self.type = "Spell"
+        self.type = "Support"
         self.element = "Hydro"
         self.tag = "Oceanid", "Elemental"
         self.cost = 2
@@ -822,7 +822,7 @@ class All_Devouring_Narwhal:
         self.type = "Character"
         self.element = "Hydro"
         self.tag = "Abyssal", "Elemental"
-        self.cost = 5
+        self.cost = 8
         self.power = 200
         self.hp = 200
         self.passive = "When played, Destroy a total of 10 cost from your field or hand to play units up to 10 cost from hand, deck or discard pile."
@@ -833,7 +833,7 @@ class Skirk:
         self.type = "Character"
         self.element = "Cryo"
         self.tag = "Abyssal"
-        self.cost = 5
+        self.cost = 8
         self.power = 200
         self.hp = 200
         self.passive = "When played, Destroy a total of 10 cost from your field or hand to play units up to 10 cost from hand, deck or discard pile."
@@ -844,7 +844,7 @@ class Tartaglia:
         self.type = "Character"
         self.element = "Hydro"
         self.tag = "Fatui", "Abyssal"
-        self.cost = 4
+        self.cost = 6
         self.power = 200
         self.hp = 200
         self.passive = "When played, Destroy a total of 10 cost from your field or hand to play units up to 10 cost from hand, deck or discard pile."
@@ -863,10 +863,10 @@ class Surtalogi:
 class Oratrice:
     def __init__(self):
         self.name = "OPratrice Mecanique d'Analyse Cardinale"
-        self.type = "Spell"
+        self.type = "Support"
         self.element = "Hydro"
         self.tag = "Court of Fontaine", "Celestial"
-        self.cost = 3
+        self.cost = 4
         
         self.passive = "When played, Destroy a total of 10 cost from your field or hand to play units up to 10 cost from hand, deck or discard pile."
 
@@ -876,7 +876,7 @@ class Folcalors:
         self.type = "Character"
         self.element = "Hydro"
         self.tag = "Oceanid", "Celestial", "Court of Fontaine"
-        self.cost = 5
+        self.cost = 8
         self.power = 200
         self.hp = 200
         self.passive = "When played, Destroy a total of 10 cost from your field or hand to play units up to 10 cost from hand, deck or discard pile."
@@ -884,10 +884,10 @@ class Folcalors:
 class Sinners_Finale:
     def __init__(self):
         self.name = "Sinner's FFinale"
-        self.type = "Spell"
+        self.type = "Support"
         self.element = "Hydro"
         self.tag = "Court of Fontaine"
-        self.cost = 4
+        self.cost = 6
         
         self.passive = "When played, Destroy a total of 10 cost from your field or hand to play units up to 10 cost from hand, deck or discard pile."
 
@@ -963,7 +963,7 @@ class Overseer_Device:
         self.type = "Character"
         self.element = "Hydro"
         self.tag = "Dragon", "Authomaton"
-        self.cost = 3
+        self.cost = 4
         self.power = 200
         self.hp = 200
         self.passive = "When played, Destroy a total of 10 cost from your field or hand to play units up to 10 cost from hand, deck or discard pile."
@@ -982,10 +982,10 @@ class PSSMON:
 class Throne_of_the_Primal_Fire:
     def __init__(self):
         self.name = "Throne of the Primal Fire"
-        self.type = "Spell"
+        self.type = "Support"
         self.element = "Hydro"
         self.tag = "Heroes", "Masters of the Night Wind"
-        self.cost = 3
+        self.cost = 4
        
         self.passive = "When played, Destroy a total of 10 cost from your field or hand to play units up to 10 cost from hand, deck or discard pile."
 
@@ -1006,7 +1006,7 @@ class Kukulkan:
         self.type = "Character"
         self.element = "Pyro"
         self.tag = "Dragon"
-        self.cost = 4
+        self.cost = 6
         self.power = 200
         self.hp = 200
         self.passive = "When played, Destroy a total of 10 cost from your field or hand to play units up to 10 cost from hand, deck or discard pile."
@@ -1017,7 +1017,7 @@ class Holawaqa_Ngoubou:
         self.type = "Character"
         self.element = "Pyro"
         self.tag = "Dragon", "Flowerfaether Clan"
-        self.cost = 4
+        self.cost = 6
         self.power = 200
         self.hp = 200
         self.passive = "When played, Destroy a total of 10 cost from your field or hand to play units up to 10 cost from hand, deck or discard pile."
@@ -1039,7 +1039,7 @@ class Ajaw:
         self.type = "Character"
         self.element = "Dendro"
         self.tag = "Dragon", "Authomaton", "Heroes", "Scions of the Canopý"
-        self.cost = 3
+        self.cost = 4
         self.power = 200
         self.hp = 200
         self.passive = "When played, Destroy a total of 10 cost from your field or hand to play units up to 10 cost from hand, deck or discard pile."
@@ -1047,20 +1047,20 @@ class Ajaw:
 class Huitzilopochtli:
     def __init__(self):
         self.name = "Huitzilopochtli"
-        self.type = "Spell"
+        self.type = "Support"
         self.element = "Pyro"
         self.tag = "Dragon"
-        self.cost = 7
+        self.cost = 15
         
         self.passive = "When played, Destroy a total of 10 cost from your field or hand to play units up to 10 cost from hand, deck or discard pile."
 
 class Moonheart_Gap:
     def __init__(self):
         self.name = "Moonheart Gap"
-        self.type = "Spell"
+        self.type = "Support"
         self.element = "Hydro"
         self.tag = "Moonsign", "Frostmoon"
-        self.cost = 3
+        self.cost = 4
         
         self.passive = "When played, Destroy a total of 10 cost from your field or hand to play units up to 10 cost from hand, deck or discard pile."
 
@@ -1081,7 +1081,7 @@ class Primordial_Geo_Vishap:
         self.type = "Character"
         self.element = "Geo"
         self.tag = "Dragon"
-        self.cost = 4
+        self.cost = 6
         self.power = 200
         self.hp = 200
         self.passive = "When played, Destroy a total of 10 cost from your field or hand to play units up to 10 cost from hand, deck or discard pile."
@@ -1092,7 +1092,7 @@ class Azdaha:
         self.type = "Character"
         self.element = "Geo"
         self.tag = "Dragon"
-        self.cost = 5
+        self.cost = 8
         self.power = 200
         self.hp = 200
         self.passive = "When played, Destroy a total of 10 cost from your field or hand to play units up to 10 cost from hand, deck or discard pile."
@@ -1100,17 +1100,17 @@ class Azdaha:
 class Silver_White_Tree:
     def __init__(self):
         self.name = "Silver White Tree"
-        self.type = "Spell"
+        self.type = "Support"
         self.element = "Dendro"
         self.tag = "Elemental", "Celestial"
-        self.cost = 3
+        self.cost = 4
        
         self.passive = "When played, Destroy a total of 10 cost from your field or hand to play units up to 10 cost from hand, deck or discard pile."
 
 class Four_Winds_Temple:
     def __init__(self):
         self.name = "Four Winds' Temple"
-        self.type = "Spell"
+        self.type = "Support"
         self.element = "Anemo"
         self.tag = "Four Winds"
         self.cost = 2
@@ -1120,7 +1120,7 @@ class Four_Winds_Temple:
 class Stormterrors_LAir:
     def __init__(self):
         self.name = "Stormterror's Lair"
-        self.type = "Spell"
+        self.type = "Support"
         self.element = "Anemo"
         self.tag = "Dragon", "Four Winds"
         
@@ -1165,7 +1165,7 @@ class Ruin_Hunter:
         self.type = "Character"
         self.element = "Omni"
         self.tag = "Abyssal", "Authomaton"
-        self.cost = 3
+        self.cost = 4
         self.power = 200
         self.hp = 200
         self.passive = "When played, Destroy a total of 10 cost from your field or hand to play units up to 10 cost from hand, deck or discard pile."
@@ -1176,7 +1176,7 @@ class Pyro_Frostnight_Scion:
         self.type = "Character"
         self.element = "Pyro"
         self.tag = "Monsign", "WildLif"
-        self.cost = 3
+        self.cost = 4
         self.power = 200
         self.hp = 200
         self.passive = "When played, Destroy a total of 10 cost from your field or hand to play units up to 10 cost from hand, deck or discard pile."
@@ -1187,7 +1187,7 @@ class Vilemina:
         self.type = "Character"
         self.element = "Dendro"
         self.tag = "Fatui", "Frostmoon", "Moonsign", "WildLife"
-        self.cost = 3
+        self.cost = 4
         self.power = 200
         self.hp = 200
         self.passive = "When played, Destroy a total of 10 cost from your field or hand to play units up to 10 cost from hand, deck or discard pile."
@@ -1198,7 +1198,7 @@ class Electro_Lawachurl:
         self.type = "Character"
         self.element = "Electro"
         self.tag = "Hilichurl"
-        self.cost = 5
+        self.cost = 8
         self.power = 200
         self.hp = 200
         self.passive = "When played, Destroy a total of 10 cost from your field or hand to play units up to 10 cost from hand, deck or discard pile."
@@ -1209,7 +1209,7 @@ class Hydro_Hilichurl_Rogue:
         self.type = "Character"
         self.element = "Hydro"
         self.tag = "Hilichurl"
-        self.cost = 4
+        self.cost = 6
         self.power = 200
         self.hp = 200
         self.passive = "When played, Destroy a total of 10 cost from your field or hand to play units up to 10 cost from hand, deck or discard pile."
@@ -1242,7 +1242,7 @@ class Oprichnik_Cannoneer:
         self.type = "Character"
         self.element = "Cryo"
         self.tag = "Fatui"
-        self.cost = 3
+        self.cost = 4
         self.power = 200
         self.hp = 200
         self.passive = "When played, Destroy a total of 10 cost from your field or hand to play units up to 10 cost from hand, deck or discard pile."
@@ -1253,7 +1253,7 @@ class Knuckle_Duckle:
         self.type = "Character"
         self.element = "Electro"
         self.tag = "Authomaton", "Moonsign"
-        self.cost = 4
+        self.cost = 6
         self.power = 200
         self.hp = 200
         self.passive = "When played, Destroy a total of 10 cost from your field or hand to play units up to 10 cost from hand, deck or discard pile."
@@ -1272,10 +1272,10 @@ class Radiant_Lunapod:
 class Foul_Legacy:
     def __init__(self):
         self.name = "Foul Legacy"
-        self.type = "Spell"
+        self.type = "Support"
         self.element = "Electro"
         self.tag = "Abyssal"
-        self.cost = 3
+        self.cost = 4
         self.power = 200
         self.hp = 200
         self.passive = "When played, Destroy a total of 10 cost from your field or hand to play units up to 10 cost from hand, deck or discard pile."
@@ -1294,7 +1294,7 @@ class Flying_Serpent:
 class Khuuvaki:
     def __init__(self):
         self.name = "Khuuvaki"
-        self.type = "Spell"
+        self.type = "Support"
         self.element = "Hydro"
         self.tag = "Frostmoon", "Moonsign"
         self.cost = 1
@@ -1305,7 +1305,7 @@ class Khuuvaki:
 class Alchemical_Granade:
     def __init__(self):
         self.name = "Alchemical Granade"
-        self.type = "Spell"
+        self.type = "Support"
         self.element = "Hydro"
         self.tag = "Treasure Hoarders", "Alchemy"
         self.cost = 2
@@ -1330,7 +1330,7 @@ class Coppelius_and_Coppelia:
         self.type = "Character"
         self.element = "Cryo"
         self.tag = "Court of Fontaine", "Authomaton"
-        self.cost = 3
+        self.cost = 4
         self.power = 200
         self.hp = 200
         self.passive = "When played, Destroy a total of 10 cost from your field or hand to play units up to 10 cost from hand, deck or discard pile."
@@ -1371,10 +1371,10 @@ class Millelith:
 class Golden_House:
     def __init__(self):
         self.name = "Golden House"
-        self.type = "Spell"
+        self.type = "Support"
         self.element = "geo"
         self.tag = "Liyue Qixing"
-        self.cost = 3
+        self.cost = 4
         self.power = 200
         self.hp = 200
         self.passive = "When played, Destroy a total of 10 cost from your field or hand to play units up to 10 cost from hand, deck or discard pile."
@@ -1385,7 +1385,7 @@ class Rifthound:
         self.type = "Character"
         self.element = "Geo"
         self.tag = "Alchemy", "Abyssal"
-        self.cost = 3
+        self.cost = 4
         self.power = 200
         self.hp = 200
         self.passive = "When played, Destroy a total of 10 cost from your field or hand to play units up to 10 cost from hand, deck or discard pile."
@@ -1396,7 +1396,7 @@ class Mooncarver:
         self.type = "Character"
         self.element = "Dendro"
         self.tag = "Adepti", "WildLife"
-        self.cost = 3
+        self.cost = 4
         self.power = 200
         self.hp = 200
         self.passive = "When played, Destroy a total of 10 cost from your field or hand to play units up to 10 cost from hand, deck or discard pile."
@@ -1407,7 +1407,7 @@ class Elynas_Spirit:
         self.type = "Character"
         self.element = "Hydro"
         self.tag = "Melusine", "Abyssal", "Alchemy"
-        self.cost = 4
+        self.cost = 6
         self.power = 200
         self.hp = 200
         self.passive = "When played, Destroy a total of 10 cost from your field or hand to play units up to 10 cost from hand, deck or discard pile."
@@ -1440,7 +1440,7 @@ class Thundering_Manifestation:
         self.type = "Character"
         self.element = "Electro"
         self.tag = "Elemental", "Youkai"
-        self.cost = 3
+        self.cost = 4
         self.power = 200
         self.hp = 200
         self.passive = "When played, Destroy a total of 10 cost from your field or hand to play units up to 10 cost from hand, deck or discard pile."
@@ -1451,7 +1451,7 @@ class Kapatcir:
         self.type = "Character"
         self.element = "Electro"
         self.tag = "Celestial", "Youkai"
-        self.cost = 4
+        self.cost = 6
         self.power = 200
         self.hp = 200
         self.passive = "When played, Destroy a total of 10 cost from your field or hand to play units up to 10 cost from hand, deck or discard pile."
@@ -1470,7 +1470,7 @@ class Boatman:
 class Moon_Chariot:
     def __init__(self):
         self.name = "Moon Chariot"
-        self.type = "Spell"
+        self.type = "Support"
         self.element = "Hydro"
         self.tag =  "Frostmoon", "Moonsign"
         self.cost = 2
@@ -1480,10 +1480,10 @@ class Moon_Chariot:
 class Sabzerus_Festival:
     def __init__(self):
         self.name = "Sabzerus Festival"
-        self.type = "Spell"
+        self.type = "Support"
         self.element = "Dendro"
         self.tag = "Akademiya"
-        self.cost = 3
+        self.cost = 4
         
         self.passive = "When played, Destroy a total of 10 cost from your field or hand to play units up to 10 cost from hand, deck or discard pile."
 

@@ -86,6 +86,12 @@ class CardBrowser(tk.Tk):
     IMAGE_WIDTH = 304
     IMAGE_HEIGHT = 270
     CORNER_RADIUS = 16
+    WEAPON_POWER_BONUS = 50
+    WEAPON_HP_BONUS = 50
+    PHASE_DRAW_COUNT = 5
+    PURCHASE_AREA_LIMIT = 10
+    MAX_MATCH_PHASES = 18
+    BOSS_PHASE_INTERVAL = 6
 
     ELEMENT_COLORS = {
         "Pyro": "#ff7043",
@@ -180,7 +186,7 @@ class CardBrowser(tk.Tk):
         "Arlecchino": "Arlecchino.bmp",
         "Imaginarium Theather": "Imaginarium Theater.png",
         "Xuanwen Beast": "Xuawen Beast.png",
-        "Self of Permition": "Seal of Permission.png",
+        "Seal of Permission": "Seal of Permission.png",
         "Mechaniozed Fortress": "Mechanized Fortress.bmp",
         "Pyro Storm Landcruiser": "Pyro Storm Landcruiser.bmp",
         "Aaru": "Aaru.png",
@@ -244,7 +250,8 @@ class CardBrowser(tk.Tk):
         "Suppression Specialist Mek": "Supression specialist mek.png",
         "Temple of Silence": "Temple of Silence.png",
         "Tlapo": "Tlapo.png",
-        "Toth": "Toth.png",
+        "Churldric": "Churlcric.png",
+        "Il Dottore Segment 20": "Il Dottore 20.png",
         "Toukabou Shigure": "Toukago Shigure.png",
         "Underwater Survey Mek": "Underwater Survey Mek.png",
         "Venti": "Venti.bmp",
@@ -333,6 +340,7 @@ class CardBrowser(tk.Tk):
         self.card_view_id = 0
         self.card_data = []
         self.canvas = None
+        self.deck_list_canvas = None
         self.card_image_items = {}
         self.show_collection_counts = False
 
@@ -554,6 +562,7 @@ class CardBrowser(tk.Tk):
         self.play_background_item = None
         self.play_image_items = []
         self.play_container = None
+        self.deck_list_canvas = None
         for child in self.winfo_children():
             if child is self.background_label:
                 continue
@@ -716,8 +725,43 @@ class CardBrowser(tk.Tk):
         )
         self._deck_action_button(action_menu, "LOJA", self._show_store, 2)
 
+        deck_list = tk.Frame(page, bg="#10141b")
+        deck_list.pack(fill="both", expand=True)
+        self.deck_list_canvas = tk.Canvas(
+            deck_list,
+            bg="#10141b",
+            highlightthickness=0,
+        )
+        scrollbar = ttk.Scrollbar(
+            deck_list,
+            orient="vertical",
+            command=self.deck_list_canvas.yview,
+        )
+        self.deck_list_canvas.configure(yscrollcommand=scrollbar.set)
+        self.deck_list_canvas.pack(side="left", fill="both", expand=True)
+        scrollbar.pack(side="right", fill="y")
+
+        deck_rows = tk.Frame(self.deck_list_canvas, bg="#10141b")
+        deck_rows_window = self.deck_list_canvas.create_window(
+            (0, 0),
+            window=deck_rows,
+            anchor="nw",
+        )
+        deck_rows.bind(
+            "<Configure>",
+            lambda event: self.deck_list_canvas.configure(
+                scrollregion=self.deck_list_canvas.bbox("all")
+            ),
+        )
+        self.deck_list_canvas.bind(
+            "<Configure>",
+            lambda event: self.deck_list_canvas.itemconfigure(
+                deck_rows_window, width=event.width
+            ),
+        )
+
         for name, current_deck in self.decks.items():
-            deck_row = tk.Frame(page, bg="#10141b")
+            deck_row = tk.Frame(deck_rows, bg="#10141b")
             deck_row.pack(anchor="w", pady=5)
             tk.Button(
                 deck_row,
@@ -1592,16 +1636,79 @@ class CardBrowser(tk.Tk):
             deck_button.pack(pady=4)
 
     def _select_play_deck(self, mode_number, mode_name, deck_name):
-        selected_cards = list(self.decks[deck_name])
+        selected_cards = [type(card)() for card in self.decks[deck_name]]
         random.shuffle(selected_cards)
+        opponent_options = [
+            name for name in self.decks if name != deck_name
+        ] or [deck_name]
+        opponent_deck_name = random.choice(opponent_options)
+        opponent_cards = [
+            type(card)() for card in self.decks[opponent_deck_name]
+        ]
+        random.shuffle(opponent_cards)
 
         self.match_mode = f"{mode_number:02d} - {mode_name}"
         self.match_deck_name = deck_name
+        self.match_opponent_deck_name = opponent_deck_name
+        self.match_opponent_deck_cards = opponent_cards
         self.match_coins = 3
+        self.match_opponent_coins = 3
+        self.match_phase = 1
+        self.match_turn_count = 0
+        self.match_phase_state = "preparation"
+        self.match_turn_owner = "player"
+        self.match_hand_locked = False
+        self.match_attacked_cards = set()
+        self.match_discard_pile = []
+        self.match_destroyed_cards = []
+        self.match_combat_bonuses = {}
+        self.match_bound_opponents = {}
+        self.match_enemy_spells_disabled = 0
+        self.match_combat_coin_bonus = 0
+        self.match_enemy_cost_modifier = 0
+        self.match_enemy_cost_turns = 0
+        self.match_defeats = 0
+        self.match_win_streak = 0
+        self.match_pending_coin_reward = 0
+        self.match_player_hp = 80
         self.match_character_cards = []
+        self.match_destroyed_player_cards = []
         self.match_support_cards = []
-        self.match_purchase_cards = selected_cards[:5]
+        self.match_purchase_cards = selected_cards[:self.PHASE_DRAW_COUNT]
+        self.match_draw_pile = selected_cards[self.PHASE_DRAW_COUNT:]
+        self.match_opponent_character_cards = self._choose_starting_opponent_cards()
+        self.match_opponent_reserve_cards = []
+        self.match_opponent_support_cards = []
+        starting_cards = set(id(card) for card in self.match_opponent_character_cards)
+        remaining_opponent_cards = [
+            card for card in opponent_cards if id(card) not in starting_cards
+        ]
+        self.match_opponent_purchase_cards = remaining_opponent_cards[:5]
+        self.match_opponent_draw_pile = remaining_opponent_cards[5:]
+        self._opponent_play_support_cards()
         self._show_match()
+
+    def _choose_starting_opponent_cards(self):
+        candidates = [
+            card for card in self.match_opponent_deck_cards
+            if getattr(card, "type", "") == "Character"
+            and 1 <= int(getattr(card, "cost", 0)) <= 2
+        ]
+        for first_index, first_card in enumerate(candidates):
+            first_tags = getattr(first_card, "tag", ())
+            first_tags = {first_tags} if isinstance(first_tags, str) else set(first_tags)
+            for second_card in candidates[first_index + 1:]:
+                second_tags = getattr(second_card, "tag", ())
+                second_tags = (
+                    {second_tags}
+                    if isinstance(second_tags, str)
+                    else set(second_tags)
+                )
+                if first_tags & second_tags:
+                    return [first_card, second_card]
+        if len(candidates) == 1:
+            return [candidates[0], type(candidates[0])()]
+        return candidates[:2]
 
     def _show_match(self):
         self._clear_screen()
@@ -1628,27 +1735,102 @@ class CardBrowser(tk.Tk):
         ).pack(side="left")
         self.match_status_label = tk.Label(
             header,
-            text="Arraste uma carta da área de compra para um campo.",
+            text="Prepare seu campo e comece o combate.",
             bg="#10141b",
             fg="#b8c2d1",
             font=("Segoe UI", 10),
         )
         self.match_status_label.pack(side="left", padx=20)
+        actions = tk.Frame(header, bg="#10141b")
+        actions.pack(side="right", padx=(12, 0))
+        self.match_phase_button = tk.Button(
+            actions,
+            text="COMEÇAR COMBATE",
+            command=self._start_combat,
+            bg="#8f493f",
+            fg="#ffffff",
+            activebackground="#b35d50",
+            activeforeground="#ffffff",
+            relief="flat",
+            bd=0,
+            padx=12,
+            pady=7,
+            font=("Segoe UI", 9, "bold"),
+            cursor="hand2",
+        )
+        self.match_phase_button.pack(side="left", padx=3)
+        self.match_deck_label = tk.Label(
+            actions,
+            bg="#181e28",
+            fg="#f4d03f",
+            padx=12,
+            pady=7,
+            font=("Segoe UI", 9, "bold"),
+        )
+        self.match_deck_label.pack(side="left", padx=3)
+        self._update_deck_indicator()
+        self.match_lock_button = tk.Button(
+            actions,
+            command=self._toggle_hand_lock,
+            fg="#ffffff",
+            activeforeground="#ffffff",
+            relief="flat",
+            bd=0,
+            padx=12,
+            pady=7,
+            font=("Segoe UI", 9, "bold"),
+            cursor="hand2",
+        )
+        self.match_lock_button.pack(side="left", padx=3)
+        self._update_hand_lock_button()
+        tk.Button(
+            actions,
+            text="DESCARTE",
+            command=self._show_discard_pile,
+            bg="#354254",
+            fg="#ffffff",
+            activebackground="#4b5d73",
+            activeforeground="#ffffff",
+            relief="flat",
+            bd=0,
+            padx=12,
+            pady=7,
+            font=("Segoe UI", 9, "bold"),
+            cursor="hand2",
+        ).pack(side="left", padx=3)
         tk.Label(
             header,
-            text=f"{self.match_mode}   |   {self.match_deck_name.upper()}",
+            text=(
+                f"{self.match_mode}   |   {self.match_deck_name.upper()} "
+                f"VS {self.match_opponent_deck_name.upper()}"
+            ),
             bg="#10141b",
             fg="#f5f1e8",
             font=("Segoe UI", 16, "bold"),
         ).pack(side="right")
         self.match_coins_label = tk.Label(
             header,
-            text=f"MOEDAS: {self.match_coins}",
+            text=(
+                f"FASE {self.match_phase}  |  TURNO {self.match_turn_count}"
+                f"  |  MOEDAS: {self.match_coins}"
+            ),
             bg="#10141b",
             fg="#f4d03f",
             font=("Segoe UI", 13, "bold"),
         )
         self.match_coins_label.pack(side="right", padx=(0, 24))
+        self.match_hp_label = tk.Label(
+            header,
+            text=(
+                f"VIDA: {self.match_player_hp}  |  "
+                f"OPONENTE: {len(self.match_opponent_character_cards)} MONSTROS"
+                f" / {len(self.match_opponent_reserve_cards)} RESERVA"
+            ),
+            bg="#10141b",
+            fg="#f5f1e8",
+            font=("Segoe UI", 10, "bold"),
+        )
+        self.match_hp_label.pack(side="right", padx=(0, 18))
 
         self.match_canvas = tk.Canvas(
             page,
@@ -1674,19 +1856,35 @@ class CardBrowser(tk.Tk):
         self.match_card_photos = []
         self.match_purchase_regions = []
         self.match_card_regions = []
+        self.match_character_regions = []
+        self.match_opponent_regions = []
         self.match_field_regions = {}
         width = max(canvas.winfo_width(), 720)
         height = max(canvas.winfo_height(), 460)
         side_padding = 10
         row_gap = 16
         label_height = 28
-        available_height = height - 3 * label_height - 2 * row_gap - 20
-        row_height = max(90, available_height // 3)
+        available_height = height - 5 * label_height - 4 * row_gap - 20
+        row_height = max(70, available_height // 5)
 
         rows = (
+            (
+                "* CAMPO DE SUPORTE/SPELL DO OPONENTE "
+                f"({len(self.match_opponent_support_cards)}/6)",
+                self.match_opponent_support_cards,
+            ),
+            (
+                "* CAMPO DE CARTAS DO OPONENTE "
+                f"(RESERVA: {len(self.match_opponent_reserve_cards)})",
+                self.match_opponent_character_cards,
+            ),
             ("* CAMPO DE CARTAS DE PERSONAGEM", self.match_character_cards),
-            ("* CAMPO DE CARTAS DE SUPORTE E ARMAS", self.match_support_cards),
-            ("* CARTAS DISPONIVEIS PARA SEREM COMPRADAS", self.match_purchase_cards),
+            ("* CAMPO DE CARTAS DE SUPORTE", self.match_support_cards),
+            (
+                "* MÃO DO JOGADOR (CARTAS DISPONÍVEIS)  |  "
+                f"DECK: {len(self.match_draw_pile)}",
+                self.match_purchase_cards,
+            ),
         )
         current_y = 10
         for title, cards in rows:
@@ -1713,12 +1911,14 @@ class CardBrowser(tk.Tk):
                 width - side_padding * 2,
                 row_height - label_height - 4,
                 field_name=(
-                    "character" if cards is self.match_character_cards
+                    "opponent_support" if cards is self.match_opponent_support_cards
+                    else "opponent" if cards is self.match_opponent_character_cards
+                    else "character" if cards is self.match_character_cards
                     else "support" if cards is self.match_support_cards
                     else "purchase"
                 ),
             )
-            if cards is not self.match_purchase_cards:
+            if cards is self.match_character_cards or cards is self.match_support_cards:
                 self.match_field_regions[
                     "character" if cards is self.match_character_cards else "support"
                 ] = (
@@ -1731,7 +1931,11 @@ class CardBrowser(tk.Tk):
 
     def _draw_match_cards(self, cards, x, y, width, height, field_name):
         canvas = self.match_canvas
-        slot_count = 6 if cards is not self.match_purchase_cards else 5
+        slot_count = (
+            6
+            if cards is not self.match_purchase_cards
+            else self.PURCHASE_AREA_LIMIT
+        )
         slot_gap = 8
         slot_width = max(72, (width - slot_gap * (slot_count - 1)) // slot_count)
         card_height = max(48, height)
@@ -1761,12 +1965,29 @@ class CardBrowser(tk.Tk):
             self.match_card_regions.append(
                 (card_x, card_y, card_x + slot_width, card_y + card_height, card)
             )
+            if field_name == "character":
+                self.match_character_regions.append(
+                    (card_x, card_y, card_x + slot_width, card_y + card_height, card)
+                )
+            elif field_name == "opponent":
+                self.match_opponent_regions.append(
+                    (card_x, card_y, card_x + slot_width, card_y + card_height, card)
+                )
             if field_name == "purchase":
                 self.match_purchase_regions.append(
                     (card_x, card_y, card_x + slot_width, card_y + card_height, card)
                 )
             card_type = getattr(card, "type", "Carta").upper()
-            card_cost = getattr(card, "cost", 0)
+            card_cost = max(
+                0,
+                int(getattr(card, "cost", 0))
+                + (
+                    self.match_enemy_cost_modifier
+                    if field_name in ("opponent", "opponent_support")
+                    else 0
+                ),
+            )
+            equipment_count = len(getattr(card, "equipped_weapons", []))
             canvas.create_text(
                 card_x + 6,
                 card_y + 8,
@@ -1800,7 +2021,14 @@ class CardBrowser(tk.Tk):
             canvas.create_text(
                 card_x + slot_width / 2,
                 y + card_height - 14,
-                text=f"{card.name}\n{card_type}  |  CUSTO: {card_cost}",
+                text=(
+                    f"{card.name}\n{card_type}  |  CUSTO: {card_cost}"
+                    + (
+                        f"\nARMAS: {equipment_count}"
+                        if equipment_count
+                        else ""
+                    )
+                ),
                 fill="#f5f1e8",
                 font=("Segoe UI", 8, "bold"),
                 width=slot_width - 8,
@@ -1924,6 +2152,36 @@ class CardBrowser(tk.Tk):
         self.match_preview_card = None
 
     def _start_card_drag(self, event):
+        if getattr(self, "match_phase_state", "preparation") == "combat":
+            for x1, y1, x2, y2, card in self.match_character_regions:
+                if x1 <= event.x <= x2 and y1 <= event.y <= y2:
+                    if self.match_turn_owner != "player":
+                        self._show_match_status("Agora é o turno do oponente.")
+                        return
+                    if getattr(card, "attacks_this_turn", 0) >= (
+                        1 + getattr(card, "extra_attacks", 0)
+                    ):
+                        self._show_match_status(
+                            f"{card.name} já atacou neste turno."
+                        )
+                        return
+                    self.match_selected_attacker = card
+                    self._show_match_status(
+                        f"{card.name} selecionado. Clique em um monstro inimigo."
+                    )
+                    return
+            for x1, y1, x2, y2, card in self.match_opponent_regions:
+                if x1 <= event.x <= x2 and y1 <= event.y <= y2:
+                    attacker = getattr(self, "match_selected_attacker", None)
+                    if attacker is not None:
+                        self._attack_character(attacker, card)
+                    else:
+                        self._show_match_status(
+                            "Selecione primeiro um personagem do seu campo."
+                        )
+                    return
+            return
+
         self.match_drag_card = None
         self.match_drag_item = None
         for x1, y1, x2, y2, card in self.match_purchase_regions:
@@ -1944,6 +2202,10 @@ class CardBrowser(tk.Tk):
             self.match_canvas.coords(self.match_drag_item, event.x, event.y)
 
     def _finish_card_drag(self, event):
+        if getattr(self, "match_phase_state", "preparation") != "preparation":
+            self.match_drag_card = None
+            self.match_drag_item = None
+            return
         if self.match_drag_item is None or self.match_drag_card is None:
             return
 
@@ -1962,28 +2224,1265 @@ class CardBrowser(tk.Tk):
             self.match_drag_card = None
             return
 
+        character_target = next(
+            (
+                field_card
+                for x1, y1, x2, y2, field_card in self.match_character_regions
+                if x1 <= event.x <= x2 and y1 <= event.y <= y2
+            ),
+            None,
+        )
         target_cards = (
             self.match_character_cards
             if target == "character"
             else self.match_support_cards
         )
-        card_cost = max(0, int(getattr(card, "cost", 0)))
-        if len(target_cards) >= 6:
-            self._show_match_status("Esse campo já possui 6 cartas.")
-        elif target == "character" and getattr(card, "type", "") != "Character":
-            self._show_match_status("Somente cartas de personagem podem ir nesse campo.")
+        card_cost = self._effective_card_cost(card)
+        card_type = getattr(card, "type", "")
+        if card_cost > self.match_coins:
+            self._show_match_status(f"Você precisa de {card_cost} moedas para essa carta.")
+        elif card_type == "Weapon":
+            if target != "character" or character_target is None:
+                self._show_match_status(
+                    "Arraste uma arma sobre um personagem para equipá-la."
+                )
+            else:
+                self._equip_weapon(character_target, card)
+                self.match_purchase_cards.remove(card)
+                self.match_coins -= card_cost
+                self._update_match_header()
+                self._show_match_status(
+                    f"{card.name} equipada em {character_target.name}: "
+                    f"+{self.WEAPON_POWER_BONUS} poder e "
+                    f"+{self.WEAPON_HP_BONUS} HP."
+                )
+                self._draw_match_board()
+        elif target == "character" and card_type != "Character":
+            self._show_match_status("Somente personagens ou armas podem ir nesse campo.")
         elif target == "support" and getattr(card, "type", "") == "Character":
             self._show_match_status("Personagens não podem ir no campo de suporte.")
-        elif card_cost > self.match_coins:
-            self._show_match_status(f"Você precisa de {card_cost} moedas para essa carta.")
-        else:
-            target_cards.append(card)
+        elif target == "character" and character_target is not None:
+            character_index = self.match_character_cards.index(character_target)
+            self.match_character_cards[character_index] = card
+            self.match_discard_pile.append(character_target)
+            self.match_destroyed_cards.append(character_target)
+            self._prepare_character_for_field(card)
             self.match_purchase_cards.remove(card)
             self.match_coins -= card_cost
-            self.match_coins_label.configure(text=f"MOEDAS: {self.match_coins}")
+            self._apply_play_passive(card)
+            self._update_match_header()
+            self._show_match_status(
+                f"{card.name} substituiu {character_target.name}, que foi destruída."
+            )
+            self._draw_match_board()
+        elif len(target_cards) >= 6:
+            self._show_match_status("Esse campo já possui 6 cartas.")
+        else:
+            target_cards.append(card)
+            if target == "character":
+                self._prepare_character_for_field(card)
+            self.match_purchase_cards.remove(card)
+            self.match_coins -= card_cost
+            self._apply_play_passive(card)
+            self._update_match_header()
             self._show_match_status(f"{card.name} colocada no campo por {card_cost} moedas.")
             self._draw_match_board()
         self.match_drag_card = None
+
+    def _prepare_character_for_field(self, card):
+        if not hasattr(card, "base_power"):
+            card.base_power = int(getattr(card, "power", 0))
+        if not hasattr(card, "base_hp"):
+            card.base_hp = int(getattr(card, "hp", 0))
+        if not hasattr(card, "equipped_weapons"):
+            card.equipped_weapons = []
+
+    def _equip_weapon(self, character, weapon):
+        self._prepare_character_for_field(character)
+        character.equipped_weapons.append(weapon)
+        character.power += self.WEAPON_POWER_BONUS
+        character.hp += self.WEAPON_HP_BONUS
+        if character.name == "Lumine":
+            weapon_element = getattr(weapon, "element", "")
+            if isinstance(weapon_element, str) and weapon_element:
+                character.element = weapon_element
+        if weapon.name == "Hexaiphanes Blade":
+            character.extra_attacks = getattr(character, "extra_attacks", 0) + 1
+
+    def _restore_destroyed_player_cards(self):
+        for card in self.match_destroyed_player_cards:
+            if len(self.match_character_cards) >= 6:
+                break
+            self._prepare_character_for_field(card)
+            weapon_count = len(card.equipped_weapons)
+            card.power = card.base_power + weapon_count * self.WEAPON_POWER_BONUS
+            card.hp = card.base_hp + weapon_count * self.WEAPON_HP_BONUS
+            self.match_character_cards.append(card)
+        self.match_destroyed_player_cards.clear()
+
+    @staticmethod
+    def _card_tags(card):
+        tags = getattr(card, "tag", ())
+        return {tags} if isinstance(tags, str) else set(tags)
+
+    def _effective_card_cost(self, card):
+        cost = max(0, int(getattr(card, "cost", 0)))
+        if (
+            getattr(card, "element", "") == "Geo"
+            and any(
+                character.name == "Domain Keeper"
+                for character in self.match_character_cards
+            )
+        ):
+            cost -= 1
+        if (
+            "Celestial" in self._card_tags(card)
+            and any(
+                character.name == "Istoria"
+                for character in self.match_character_cards
+            )
+        ):
+            cost -= 1
+        if (
+            getattr(card, "element", "") == "Cryo"
+            and any(
+                character.name == "Anastasia"
+                for character in self.match_character_cards
+            )
+        ):
+            cost -= 1
+        if (
+            getattr(card, "type", "") == "Support"
+            and getattr(card, "element", "") == "Cryo"
+            and any(
+                character.name == "Snegurochka Cryomancer"
+                for character in self.match_character_cards
+            )
+        ):
+            cost -= 1
+        return max(0, cost)
+
+    def _draw_cards(self, amount=1, predicate=None):
+        drawn_cards = []
+        for _ in range(amount):
+            card = next(
+                (
+                    candidate
+                    for candidate in self.match_draw_pile
+                    if predicate is None or predicate(candidate)
+                ),
+                None,
+            )
+            if (
+                card is None
+                or len(self.match_purchase_cards) >= self.PURCHASE_AREA_LIMIT
+            ):
+                break
+            self.match_draw_pile.remove(card)
+            self.match_purchase_cards.append(card)
+            drawn_cards.append(card)
+        return drawn_cards
+
+    def _draw_pyro_from_top_three(self, source_card=None):
+        revealed_cards = self.match_draw_pile[:3]
+        del self.match_draw_pile[:3]
+        pyro_options = [
+            card
+            for card in revealed_cards
+            if getattr(card, "element", "") == "Pyro"
+        ]
+        pyro_card = None
+        if revealed_cards:
+            can_take = (
+                bool(pyro_options)
+                and len(self.match_purchase_cards) < self.PURCHASE_AREA_LIMIT
+            )
+            pyro_card = self._show_revealed_cards(
+                revealed_cards,
+                pyro_options if can_take else [],
+                source_card,
+            )
+        if pyro_card is not None:
+            revealed_cards.remove(pyro_card)
+            self.match_purchase_cards.append(pyro_card)
+        self.match_draw_pile.extend(revealed_cards)
+        self._update_match_header()
+        return pyro_card
+
+    def _show_revealed_cards(self, revealed_cards, selectable, source_card=None):
+        """Mostra as cartas reveladas; retorna a carta escolhida entre as selecionáveis."""
+        result = {"card": None}
+        window = tk.Toplevel(self)
+        window.title("Cartas reveladas")
+        window.configure(bg="#10141b")
+        window.transient(self)
+        window.resizable(False, False)
+
+        container = tk.Frame(window, bg="#10141b", padx=18, pady=18)
+        container.pack(fill="both", expand=True)
+        source_text = f"{source_card.name}: " if source_card is not None else ""
+        if selectable:
+            message = (
+                f"{source_text}escolha uma carta Pyro para a mão. "
+                "As outras vão para o fundo do deck."
+            )
+        else:
+            message = (
+                f"{source_text}nenhuma carta pode ser adicionada à mão. "
+                "Todas vão para o fundo do deck."
+            )
+        tk.Label(
+            container,
+            text=message,
+            bg="#10141b",
+            fg="#f5f1e8",
+            font=("Segoe UI", 12, "bold"),
+            wraplength=560,
+            justify="left",
+        ).pack(anchor="w", pady=(0, 12))
+
+        def choose(card):
+            result["card"] = card
+            window.destroy()
+
+        cards_row = tk.Frame(container, bg="#10141b")
+        cards_row.pack()
+        for card in revealed_cards:
+            can_choose = any(card is option for option in selectable)
+            panel = tk.Frame(
+                cards_row,
+                bg="#202936",
+                highlightthickness=2,
+                highlightbackground="#f4d03f" if can_choose else "#8090a5",
+                padx=8,
+                pady=8,
+            )
+            panel.pack(side="left", padx=6)
+            pil_image = self._prepare_match_card_image(card, 150, 130)
+            if pil_image is not None:
+                image = ImageTk.PhotoImage(pil_image)
+                image_label = tk.Label(panel, image=image, bg="#202936")
+                image_label.image = image
+                image_label.pack()
+            tk.Label(
+                panel,
+                text=card.name,
+                bg="#202936",
+                fg="#f5f1e8",
+                font=("Segoe UI", 10, "bold"),
+                wraplength=150,
+            ).pack(pady=(6, 0))
+            tk.Label(
+                panel,
+                text=(
+                    f"{getattr(card, 'type', 'Carta')} | "
+                    f"{getattr(card, 'element', '-')} | "
+                    f"custo {getattr(card, 'cost', 0)}"
+                ),
+                bg="#202936",
+                fg="#f4d03f",
+                font=("Segoe UI", 8, "bold"),
+            ).pack()
+            if can_choose:
+                tk.Button(
+                    panel,
+                    text="PEGAR",
+                    command=lambda selected=card: choose(selected),
+                    bg="#4d6f61",
+                    fg="#ffffff",
+                    activebackground="#638c7a",
+                    activeforeground="#ffffff",
+                    relief="flat",
+                    bd=0,
+                    padx=12,
+                    pady=5,
+                    font=("Segoe UI", 9, "bold"),
+                    cursor="hand2",
+                ).pack(pady=(6, 0))
+
+        tk.Button(
+            container,
+            text="NÃO PEGAR NENHUMA" if selectable else "OK",
+            command=window.destroy,
+            bg="#354254",
+            fg="#ffffff",
+            activebackground="#4b5d73",
+            activeforeground="#ffffff",
+            relief="flat",
+            bd=0,
+            padx=12,
+            pady=7,
+            font=("Segoe UI", 9, "bold"),
+            cursor="hand2",
+        ).pack(anchor="e", pady=(12, 0))
+
+        window.update_idletasks()
+        x = self.winfo_rootx() + (self.winfo_width() - window.winfo_width()) // 2
+        y = self.winfo_rooty() + (self.winfo_height() - window.winfo_height()) // 2
+        window.geometry(f"+{max(x, 0)}+{max(y, 0)}")
+        window.grab_set()
+        window.focus_set()
+        self.wait_window(window)
+        return result["card"]
+
+    def _choose_card_to_discard(self, options, source_card=None):
+        """Abre um diálogo modal; retorna a carta escolhida ou None se cancelado."""
+        result = {"card": None}
+        window = tk.Toplevel(self)
+        window.title("Escolha a carta para descartar")
+        window.configure(bg="#10141b")
+        window.transient(self)
+        window.resizable(False, False)
+
+        container = tk.Frame(window, bg="#10141b", padx=18, pady=18)
+        container.pack(fill="both", expand=True)
+        source_text = f"{source_card.name}: " if source_card is not None else ""
+        tk.Label(
+            container,
+            text=f"{source_text}escolha uma carta da mão para descartar",
+            bg="#10141b",
+            fg="#f5f1e8",
+            font=("Segoe UI", 12, "bold"),
+            wraplength=380,
+            justify="left",
+        ).pack(anchor="w", pady=(0, 12))
+
+        def choose(card):
+            result["card"] = card
+            window.destroy()
+
+        for option in options:
+            tk.Button(
+                container,
+                text=(
+                    f"{option.name}  ({getattr(option, 'type', 'Carta')}, "
+                    f"custo {getattr(option, 'cost', 0)})"
+                ),
+                command=lambda selected=option: choose(selected),
+                bg="#354254",
+                fg="#ffffff",
+                activebackground="#4b5d73",
+                activeforeground="#ffffff",
+                relief="flat",
+                bd=0,
+                anchor="w",
+                padx=12,
+                pady=7,
+                font=("Segoe UI", 10),
+                cursor="hand2",
+            ).pack(fill="x", pady=2)
+        tk.Button(
+            container,
+            text="NÃO DESCARTAR",
+            command=window.destroy,
+            bg="#8f493f",
+            fg="#ffffff",
+            activebackground="#b35d50",
+            activeforeground="#ffffff",
+            relief="flat",
+            bd=0,
+            padx=12,
+            pady=7,
+            font=("Segoe UI", 9, "bold"),
+            cursor="hand2",
+        ).pack(anchor="e", pady=(12, 0))
+
+        window.update_idletasks()
+        x = self.winfo_rootx() + (self.winfo_width() - window.winfo_width()) // 2
+        y = self.winfo_rooty() + (self.winfo_height() - window.winfo_height()) // 2
+        window.geometry(f"+{max(x, 0)}+{max(y, 0)}")
+        window.grab_set()
+        window.focus_set()
+        self.wait_window(window)
+        return result["card"]
+
+    def _discard_purchase_card(self, excluded_card=None):
+        options = [
+            candidate
+            for candidate in self.match_purchase_cards
+            if candidate is not excluded_card
+        ]
+        if not options:
+            return None
+        card = self._choose_card_to_discard(options, excluded_card)
+        if card is None:
+            return None
+        self.match_purchase_cards.remove(card)
+        self.match_discard_pile.append(card)
+        for lumine in self.match_character_cards:
+            if lumine.name == "Lumine":
+                self._add_combat_bonus(lumine, power=100)
+        return card
+
+    def _destroy_enemy_character(self, card):
+        if card in self.match_opponent_character_cards:
+            self.match_opponent_character_cards.remove(card)
+            self.match_destroyed_cards.append(card)
+            self._summon_opponent_reserve_cards()
+
+    def _summon_opponent_reserve_cards(self):
+        while (
+            len(self.match_opponent_character_cards) < 5
+            and self.match_opponent_reserve_cards
+        ):
+            self.match_opponent_character_cards.append(
+                self.match_opponent_reserve_cards.pop(0)
+            )
+
+    def _opponent_has_characters(self):
+        return bool(
+            self.match_opponent_character_cards
+            or self.match_opponent_reserve_cards
+        )
+
+    def _boss_is_active(self):
+        return any(
+            getattr(card, "is_boss", False)
+            for card in (
+                self.match_opponent_character_cards
+                + self.match_opponent_reserve_cards
+            )
+        )
+
+    def _spawn_phase_boss(self):
+        boss_candidates = [
+            card
+            for card in self.match_opponent_deck_cards
+            if (
+                getattr(card, "type", "") == "Character"
+                and int(getattr(card, "cost", 0)) in {6, 8}
+            )
+        ]
+        if not boss_candidates:
+            boss_candidates = [
+                card
+                for card in self.base_decks["deck2"]
+                if (
+                    getattr(card, "type", "") == "Character"
+                    and int(getattr(card, "cost", 0)) in {6, 8}
+                )
+            ]
+        if not boss_candidates:
+            raise RuntimeError(
+                "Não há um personagem de custo 6 ou 8 disponível para o chefe."
+            )
+
+        boss = type(random.choice(boss_candidates))()
+        boss.hp = int(getattr(boss, "hp", 0)) * 3 + 10 * self.match_turn_count
+        boss.base_hp = boss.hp
+        boss.is_boss = True
+        boss.boss_phase = self.match_phase
+        if len(self.match_opponent_character_cards) >= 5:
+            displaced_card = self.match_opponent_character_cards.pop()
+            self.match_opponent_reserve_cards.insert(0, displaced_card)
+        self.match_opponent_character_cards.insert(0, boss)
+        return boss
+
+    def _begin_player_combat_turn(self):
+        self.match_turn_count += 1
+        self._apply_turn_cost_passives()
+        self._update_match_header()
+        return True
+
+    def _destroy_player_character(self, card, restore_after_combat=True):
+        if card not in self.match_character_cards:
+            return False
+        envoy = next(
+            (
+                candidate
+                for candidate in self.match_character_cards
+                if candidate is not card and candidate.name == "Celestial Envoy"
+            ),
+            None,
+        )
+        destroyed_card = envoy or card
+        self.match_character_cards.remove(destroyed_card)
+        self.match_destroyed_cards.append(destroyed_card)
+        if restore_after_combat:
+            self.match_destroyed_player_cards.append(destroyed_card)
+        else:
+            self.match_discard_pile.append(destroyed_card)
+        self._on_player_character_destroyed(destroyed_card)
+        return destroyed_card is card
+
+    def _add_combat_bonus(self, card, power=0, hp=0):
+        if not power and not hp:
+            return
+        bonus_power, bonus_hp = self.match_combat_bonuses.get(id(card), (0, 0))
+        self.match_combat_bonuses[id(card)] = (
+            bonus_power + power,
+            bonus_hp + hp,
+        )
+        card.power += power
+        card.hp += hp
+
+    def _clear_combat_bonuses(self):
+        cards = self.match_character_cards + self.match_destroyed_player_cards
+        cards_by_id = {id(card): card for card in cards}
+        for card_id, (power, hp) in self.match_combat_bonuses.items():
+            card = cards_by_id.get(card_id)
+            if card is not None:
+                card.power -= power
+                card.hp = max(0, card.hp - hp)
+        self.match_combat_bonuses.clear()
+
+    def _bind_enemy_character(self, turns=1):
+        if not self.match_opponent_character_cards:
+            return None
+        target = max(
+            self.match_opponent_character_cards,
+            key=lambda card: int(getattr(card, "power", 0)),
+        )
+        self.match_bound_opponents[id(target)] = turns
+        return target
+
+    def _on_player_character_destroyed(self, card):
+        if card.name in {"Istoria", "Chlothar", "Ruin Destroyer Serpent"}:
+            self._draw_cards()
+        if card.name == "Hydro Abyss Mage":
+            self._bind_enemy_character()
+
+    def _apply_play_passive(self, card):
+        if card.name != "Aether" and "Celestial" in self._card_tags(card):
+            for aether in self.match_character_cards:
+                if aether.name == "Aether":
+                    self._add_combat_bonus(aether, power=100)
+
+        if card.name == "Pyro Seelie Guide":
+            self._draw_pyro_from_top_three(card)
+        elif card.name == "Jack Frost":
+            self._draw_cards(
+                predicate=lambda candidate: "Fae" in self._card_tags(candidate)
+            )
+        elif card.name == "Cryo Abyss Mage":
+            self._draw_cards(
+                predicate=lambda candidate: "Abyssal" in self._card_tags(candidate)
+            )
+        elif card.name == "Caribert":
+            self._draw_cards(
+                predicate=lambda candidate: "Abyssal" in self._card_tags(candidate)
+            )
+        elif card.name == "Tenebrous Mimiflora":
+            self.match_character_cards.remove(card)
+            self.match_discard_pile.append(card)
+            replacement = next(
+                (
+                    candidate
+                    for candidate in self.match_purchase_cards + self.match_discard_pile
+                    if (
+                        candidate is not card
+                        and getattr(candidate, "type", "") == "Character"
+                        and "Abyssal" in self._card_tags(candidate)
+                    )
+                ),
+                None,
+            )
+            if replacement is not None and len(self.match_character_cards) < 6:
+                if replacement in self.match_purchase_cards:
+                    self.match_purchase_cards.remove(replacement)
+                else:
+                    self.match_discard_pile.remove(replacement)
+                self._prepare_character_for_field(replacement)
+                replacement.hp = replacement.base_hp
+                self.match_character_cards.append(replacement)
+        elif card.name == "Hydro Abyss Herald":
+            if self._discard_purchase_card(card) is not None:
+                self._bind_enemy_character()
+        elif card.name == "Anastasia":
+            for enemy in self.match_opponent_character_cards[:2]:
+                self.match_bound_opponents[id(enemy)] = 2
+        elif card.name == "Cryo Abyss Herald":
+            if self._discard_purchase_card(card) is not None:
+                card.piercing = True
+        elif card.name == "Ruin Guard":
+            target = next(
+                (
+                    enemy
+                    for enemy in self.match_opponent_character_cards
+                    if int(getattr(enemy, "cost", 0)) <= 2
+                ),
+                None,
+            )
+            if target is not None:
+                self._destroy_enemy_character(target)
+        elif card.name == "Elynas":
+            for enemy in list(self.match_opponent_character_cards):
+                if int(getattr(enemy, "cost", 0)) <= 4:
+                    self._destroy_enemy_character(enemy)
+        elif card.name == "Ursa, the Drake":
+            if (
+                not getattr(card, "ursa_used", False)
+                and self._discard_purchase_card(card) is not None
+            ):
+                target = next(
+                    (
+                        enemy
+                        for enemy in self.match_opponent_character_cards
+                        if int(getattr(enemy, "hp", 0)) <= 400
+                    ),
+                    None,
+                )
+                if target is not None:
+                    self._destroy_enemy_character(target)
+                card.ursa_used = True
+        elif card.name == "Celestial Nail":
+            self.match_opponent_support_cards.clear()
+            for enemy in list(self.match_opponent_character_cards):
+                enemy.hp = max(0, int(getattr(enemy, "hp", 0)) - 200)
+                if enemy.hp == 0:
+                    self._destroy_enemy_character(enemy)
+            self.match_discard_pile.append(card)
+            self.match_support_cards.remove(card)
+        elif card.name == "Fake Sky":
+            self.match_enemy_cost_turns = 3
+        elif card.name == "Elemental Conversion":
+            target = next(
+                (
+                    candidate
+                    for candidate in self.match_purchase_cards
+                    if candidate is not card and hasattr(candidate, "element")
+                ),
+                None,
+            )
+            if target is not None:
+                target.element = "Omni"
+            self.match_discard_pile.append(card)
+            self.match_support_cards.remove(card)
+        elif card.name == "Purification":
+            self.match_enemy_spells_disabled += 1
+            self.match_discard_pile.append(card)
+            self.match_support_cards.remove(card)
+        elif card.name == "Spaceship":
+            for hand_card in list(self.match_purchase_cards):
+                self.match_purchase_cards.remove(hand_card)
+                self.match_discard_pile.append(hand_card)
+            self._draw_cards(5)
+            self.match_discard_pile.append(card)
+            self.match_support_cards.remove(card)
+        elif card.name == "Leylines":
+            if self._discard_purchase_card(card) is not None:
+                self.match_coins += 1
+            self.match_discard_pile.append(card)
+            self.match_support_cards.remove(card)
+        elif card.name == "Abyssal Rift":
+            if self.match_opponent_character_cards:
+                returned_card = self.match_opponent_character_cards.pop(0)
+                self.match_opponent_draw_pile.append(returned_card)
+                self._summon_opponent_reserve_cards()
+            self._draw_cards(
+                predicate=lambda candidate: (
+                    "Abyssal" in self._card_tags(candidate)
+                    and int(getattr(candidate, "cost", 0)) <= 4
+                )
+            )
+            self.match_discard_pile.append(card)
+            self.match_support_cards.remove(card)
+        elif card.name in {"Transcending Fate", "Loom of Fate"}:
+            if (
+                card.name == "Transcending Fate"
+                and self._discard_purchase_card(card) is None
+            ):
+                self.match_discard_pile.append(card)
+                self.match_support_cards.remove(card)
+                return
+            revived_card = next(
+                (
+                    candidate
+                    for candidate in self.match_discard_pile
+                    if (
+                        getattr(candidate, "type", "") == "Character"
+                        and "Abyssal" in self._card_tags(candidate)
+                    )
+                ),
+                None,
+            )
+            if revived_card is not None and len(self.match_character_cards) < 6:
+                self.match_discard_pile.remove(revived_card)
+                self._prepare_character_for_field(revived_card)
+                revived_card.hp = revived_card.base_hp
+                self.match_character_cards.append(revived_card)
+            if card.name == "Loom of Fate":
+                if self._discard_purchase_card(card) is not None:
+                    self._draw_cards(
+                        predicate=lambda candidate: (
+                            "Abyssal" in self._card_tags(candidate)
+                        )
+                    )
+            self.match_discard_pile.append(card)
+            self.match_support_cards.remove(card)
+        elif card.name == "Sinner's Blessing":
+            sacrifice = next(
+                (
+                    character
+                    for character in self.match_character_cards
+                    if character is not card and int(getattr(character, "cost", 0)) <= 4
+                ),
+                None,
+            )
+            revived_card = next(
+                (
+                    candidate
+                    for candidate in self.match_discard_pile
+                    if (
+                        getattr(candidate, "type", "") == "Character"
+                        and "Abyssal" in self._card_tags(candidate)
+                        and int(getattr(candidate, "cost", 0)) >= 6
+                    )
+                ),
+                None,
+            )
+            if sacrifice is not None:
+                self._destroy_player_character(
+                    sacrifice,
+                    restore_after_combat=False,
+                )
+            if revived_card is not None and len(self.match_character_cards) < 6:
+                self.match_discard_pile.remove(revived_card)
+                self._prepare_character_for_field(revived_card)
+                revived_card.hp = revived_card.base_hp
+                self.match_character_cards.append(revived_card)
+            self.match_discard_pile.append(card)
+            self.match_support_cards.remove(card)
+        elif card.name == "Corrupted Blood":
+            sacrifice = next(
+                (
+                    character
+                    for character in self.match_character_cards
+                    if character is not card
+                ),
+                None,
+            )
+            revived_card = None
+            if sacrifice is not None:
+                sacrifice_cost = int(getattr(sacrifice, "cost", 0))
+                self._destroy_player_character(
+                    sacrifice,
+                    restore_after_combat=False,
+                )
+                revived_card = next(
+                    (
+                        candidate
+                        for candidate in self.match_discard_pile
+                        if (
+                            getattr(candidate, "type", "") == "Character"
+                            and "Abyssal" in self._card_tags(candidate)
+                            and int(getattr(candidate, "cost", 0)) == sacrifice_cost
+                        )
+                    ),
+                    None,
+                )
+            if revived_card is not None and len(self.match_character_cards) < 6:
+                self.match_discard_pile.remove(revived_card)
+                self._prepare_character_for_field(revived_card)
+                revived_card.hp = revived_card.base_hp
+                self.match_character_cards.append(revived_card)
+            self.match_discard_pile.append(card)
+            self.match_support_cards.remove(card)
+
+    OPPONENT_STATIC_SPELLS = {"Statue of the Seven", "Celestia"}
+    OPPONENT_CAST_SPELLS = {
+        "Celestial Nail",
+        "Purification",
+        "Fake Sky",
+        "Abyssal Rift",
+    }
+    OPPONENT_SUPPORT_LIMIT = 6
+
+    def _opponent_play_support_cards(self):
+        """O oponente baixa spells do próprio deck no campo de suporte/spell."""
+        self.match_opponent_support_cards.clear()
+        usable = self.OPPONENT_STATIC_SPELLS | self.OPPONENT_CAST_SPELLS
+        pool = [
+            type(card)()
+            for card in self.match_opponent_deck_cards
+            if getattr(card, "type", "") == "Support"
+            and card.name in usable
+        ]
+        random.shuffle(pool)
+        budget = 2 + self.match_phase
+        for spell in pool:
+            if len(self.match_opponent_support_cards) >= self.OPPONENT_SUPPORT_LIMIT:
+                break
+            cost = max(
+                0, int(getattr(spell, "cost", 0)) + self.match_enemy_cost_modifier
+            )
+            if cost > budget:
+                continue
+            budget -= cost
+            self.match_opponent_support_cards.append(spell)
+
+    def _opponent_spell_negated(self, spell):
+        """Purification do jogador anula uma spell do oponente por combate."""
+        if self.match_enemy_spells_disabled <= 0:
+            return False
+        self.match_enemy_spells_disabled -= 1
+        self.match_opponent_support_cards.remove(spell)
+        return True
+
+    def _apply_opponent_combat_start_passives(self):
+        for spell in list(self.match_opponent_support_cards):
+            if spell.name not in self.OPPONENT_STATIC_SPELLS:
+                continue
+            if self._opponent_spell_negated(spell):
+                continue
+            for enemy in self.match_opponent_character_cards:
+                if spell.name == "Statue of the Seven":
+                    enemy.hp += 200
+                elif "Celestial" in self._card_tags(enemy):
+                    enemy.power += 200
+                    enemy.hp += 100
+
+    def _cast_opponent_spells(self):
+        """Ativa as spells de uso único do oponente no início do turno dele."""
+        messages = []
+        for spell in list(self.match_opponent_support_cards):
+            if spell.name not in self.OPPONENT_CAST_SPELLS:
+                continue
+            if self._opponent_spell_negated(spell):
+                messages.append(f"{spell.name} do oponente foi anulada.")
+                continue
+            if spell.name == "Celestial Nail":
+                self.match_discard_pile.extend(self.match_support_cards)
+                self.match_support_cards.clear()
+                for character in list(self.match_character_cards):
+                    character.hp = max(0, int(getattr(character, "hp", 0)) - 200)
+                    if character.hp == 0:
+                        self._destroy_player_character(character)
+            elif spell.name == "Purification":
+                if self.match_support_cards:
+                    disabled = self.match_support_cards.pop(0)
+                    self.match_discard_pile.append(disabled)
+            elif spell.name == "Fake Sky":
+                self.match_coins = max(0, self.match_coins - 1)
+            elif spell.name == "Abyssal Rift":
+                candidate = next(
+                    (
+                        card
+                        for card in self.match_opponent_deck_cards
+                        if getattr(card, "type", "") == "Character"
+                        and "Abyssal" in self._card_tags(card)
+                        and int(getattr(card, "cost", 0)) <= 4
+                    ),
+                    None,
+                )
+                if (
+                    candidate is not None
+                    and len(self.match_opponent_character_cards) < 5
+                ):
+                    self.match_opponent_character_cards.append(type(candidate)())
+            self.match_opponent_support_cards.remove(spell)
+            messages.append(f"Oponente ativou {spell.name}.")
+        return messages
+
+    def _apply_combat_start_passives(self):
+        self._apply_opponent_combat_start_passives()
+        for card in self.match_character_cards + self.match_support_cards:
+            if card.name == "Paimon":
+                self._draw_cards()
+            elif card.name == "Statue of the Seven":
+                for character in self.match_character_cards:
+                    character.hp += 200
+            elif card.name == "Celestia":
+                for character in self.match_character_cards:
+                    if "Celestial" in self._card_tags(character):
+                        self._add_combat_bonus(character, power=200, hp=100)
+            elif card.name == "Defiled Statue":
+                bonus = 50 * len(self.match_discard_pile)
+                for character in self.match_character_cards:
+                    if character is not card and "Abyssal" in self._card_tags(character):
+                        self._add_combat_bonus(character, power=bonus)
+            elif card.name == "Elynas":
+                for character in self.match_character_cards:
+                    if character is not card and "Abyssal" in self._card_tags(character):
+                        self._add_combat_bonus(character, power=200)
+
+    def _apply_turn_cost_passives(self):
+        cards_in_play = self.match_character_cards + self.match_support_cards
+        coin_bonus = sum(
+            1
+            for card in cards_in_play
+            if card.name in {"Celestia", "Kresnik Torch", "Ororon"}
+        )
+        if coin_bonus:
+            self.match_coins += coin_bonus
+            self.match_combat_coin_bonus += coin_bonus
+
+        if self.match_enemy_cost_turns:
+            self.match_enemy_cost_modifier -= 1
+            self.match_enemy_cost_turns -= 1
+
+    def _reset_player_attack_counts(self):
+        for character in self.match_character_cards:
+            character.attacks_this_turn = 0
+
+    def _update_deck_indicator(self):
+        if hasattr(self, "match_deck_label") and self.match_deck_label.winfo_exists():
+            self.match_deck_label.configure(
+                text=f"DECK: {len(self.match_draw_pile)}"
+            )
+
+    def _update_match_header(self):
+        self._update_deck_indicator()
+        if hasattr(self, "match_coins_label") and self.match_coins_label.winfo_exists():
+            self.match_coins_label.configure(
+                text=(
+                    f"FASE {self.match_phase}  |  TURNO "
+                    f"{self.match_turn_count}  |  "
+                    f"MOEDAS: {self.match_coins}"
+                )
+            )
+        if hasattr(self, "match_hp_label") and self.match_hp_label.winfo_exists():
+            self.match_hp_label.configure(
+                text=(
+                    f"VIDA: {max(0, self.match_player_hp)}  |  "
+                    f"OPONENTE: {len(self.match_opponent_character_cards)} MONSTROS"
+                    f" / {len(self.match_opponent_reserve_cards)} RESERVA"
+                )
+            )
+        if hasattr(self, "match_phase_button") and self.match_phase_button.winfo_exists():
+            self.match_phase_button.configure(
+                text=(
+                    "COMEÇAR COMBATE"
+                    if self.match_phase_state == "preparation"
+                    else "ENCERRAR TURNO"
+                ),
+                command=(
+                    self._start_combat
+                    if self.match_phase_state == "preparation"
+                    else self._end_combat_turn
+                ),
+            )
+
+    def _show_discard_pile(self):
+        window = tk.Toplevel(self)
+        window.title("Cartas descartadas e destruídas")
+        window.configure(bg="#10141b")
+        window.geometry("430x460")
+        window.transient(self)
+
+        container = tk.Frame(window, bg="#10141b", padx=18, pady=18)
+        container.pack(fill="both", expand=True)
+        tk.Label(
+            container,
+            text="CARTAS DESCARTADAS E DESTRUÍDAS",
+            bg="#10141b",
+            fg="#f5f1e8",
+            font=("Segoe UI", 13, "bold"),
+        ).pack(anchor="w", pady=(0, 12))
+
+        sections = (
+            ("DESCARTADAS", self.match_discard_pile),
+            ("DESTRUÍDAS NESTA PARTIDA", self.match_destroyed_cards),
+            (
+                "AGUARDANDO RETORNO AO CAMPO",
+                self.match_destroyed_player_cards,
+            ),
+        )
+        for title, cards in sections:
+            tk.Label(
+                container,
+                text=f"{title} ({len(cards)})",
+                bg="#10141b",
+                fg="#f4d03f",
+                font=("Segoe UI", 10, "bold"),
+            ).pack(anchor="w", pady=(8, 2))
+            content = (
+                "\n".join(
+                    f"- {card.name} ({getattr(card, 'type', 'Carta')})"
+                    for card in cards
+                )
+                if cards
+                else "Nenhuma carta."
+            )
+            tk.Label(
+                container,
+                text=content,
+                bg="#181e28",
+                fg="#cbd3dc",
+                font=("Segoe UI", 9),
+                justify="left",
+                anchor="nw",
+                wraplength=380,
+                padx=10,
+                pady=7,
+            ).pack(fill="x")
+
+        tk.Button(
+            container,
+            text="FECHAR",
+            command=window.destroy,
+            bg="#354254",
+            fg="#ffffff",
+            activebackground="#4b5d73",
+            activeforeground="#ffffff",
+            relief="flat",
+            bd=0,
+            padx=14,
+            pady=7,
+            font=("Segoe UI", 9, "bold"),
+            cursor="hand2",
+        ).pack(anchor="e", pady=(16, 0))
+
+    def _update_hand_lock_button(self):
+        locked = getattr(self, "match_hand_locked", False)
+        self.match_lock_button.configure(
+            text="MÃO TRAVADA" if locked else "TRAVAR MÃO",
+            bg="#4d6f61" if locked else "#354254",
+            activebackground="#638c7a" if locked else "#4b5d73",
+        )
+
+    def _toggle_hand_lock(self):
+        self.match_hand_locked = not self.match_hand_locked
+        self._update_hand_lock_button()
+        self._show_match_status(
+            "Mão travada: as cartas ficam na mão e nenhuma carta será comprada "
+            "no próximo turno."
+            if self.match_hand_locked
+            else "Mão destravada."
+        )
+
+    def _refill_purchase_cards(self):
+        while (
+            len(self.match_purchase_cards) < self.PHASE_DRAW_COUNT
+            and self.match_draw_pile
+        ):
+            self.match_purchase_cards.append(self.match_draw_pile.pop(0))
+
+    def _refill_opponent_purchase_cards(self):
+        while (
+            len(self.match_opponent_purchase_cards) < 5
+            and self.match_opponent_draw_pile
+        ):
+            self.match_opponent_purchase_cards.append(
+                self.match_opponent_draw_pile.pop(0)
+            )
+
+    def _start_combat(self):
+        if self.match_phase_state != "preparation":
+            return
+        if not self.match_character_cards:
+            self._show_match_status(
+                "Coloque pelo menos um personagem no campo antes de começar."
+            )
+            return
+
+        self.match_phase_state = "combat"
+        self.match_turn_owner = "player"
+        self.match_attacked_cards.clear()
+        self._reset_player_attack_counts()
+        for character in self.match_character_cards:
+            if character.name == "Ursa, the Drake":
+                character.ursa_used = False
+        self.match_selected_attacker = None
+        self._apply_combat_start_passives()
+        if not self._begin_player_combat_turn():
+            return
+        self._show_match_status(
+            "Seu turno: selecione um personagem e depois um monstro inimigo."
+        )
+        self._draw_match_board()
+
+    def _attack_character(self, attacker, defender):
+        if self.match_phase_state != "combat":
+            return
+        if self.match_turn_owner != "player":
+            self._show_match_status("Agora é o turno do oponente.")
+            return
+        if id(attacker) in self.match_attacked_cards:
+            self._show_match_status(f"{attacker.name} já atacou neste turno.")
+            return
+
+        damage = max(0, int(getattr(attacker, "power", 0)))
+        defender.hp = max(0, int(getattr(defender, "hp", 0)) - damage)
+        self.match_attacked_cards.add(id(attacker))
+        attacker.attacks_this_turn = getattr(attacker, "attacks_this_turn", 0) + 1
+        self.match_selected_attacker = None
+        if defender.hp == 0:
+            defeated_boss = getattr(defender, "is_boss", False)
+            self._destroy_enemy_character(defender)
+            self._show_match_status(
+                f"{attacker.name} destruiu {defender.name}."
+            )
+            if defeated_boss:
+                if self.match_phase == self.MAX_MATCH_PHASES:
+                    self._finish_match(
+                        True,
+                        "Você derrotou o chefe da fase 18 e venceu a partida!",
+                    )
+                else:
+                    self._finish_combat(True)
+                return
+
+        else:
+            self._show_match_status(
+                f"{attacker.name} causou {damage} de dano em {defender.name}."
+            )
+
+        self._draw_match_board()
+        if not self._opponent_has_characters():
+            self._finish_combat(True)
+
+    def _opponent_attack(self):
+        self.match_turn_owner = "opponent"
+        self.match_attacked_cards.clear()
+        cast_messages = self._cast_opponent_spells()
+        if cast_messages:
+            self._show_match_status(" ".join(cast_messages))
+        for attacker in list(self.match_opponent_character_cards):
+            if not self.match_character_cards:
+                break
+            bound_turns = self.match_bound_opponents.get(id(attacker), 0)
+            if bound_turns:
+                self.match_bound_opponents[id(attacker)] = bound_turns - 1
+                continue
+            defender = min(
+                self.match_character_cards,
+                key=lambda card: int(getattr(card, "hp", 0)),
+            )
+            damage = max(0, int(getattr(attacker, "power", 0)))
+            defender.hp = max(0, int(getattr(defender, "hp", 0)) - damage)
+            self.match_attacked_cards.add(id(attacker))
+            if defender.hp == 0:
+                target_destroyed = self._destroy_player_character(defender)
+                self._show_match_status(
+                    (
+                        f"{attacker.name} destruiu {defender.name}."
+                        if target_destroyed
+                        else f"{attacker.name} destruiu Celestial Envoy em vez de "
+                        f"{defender.name}."
+                    )
+                )
+
+        if not self.match_character_cards:
+            if self._boss_is_active():
+                self._finish_match(
+                    False,
+                    "Você perdeu para um chefe e a partida terminou.",
+                )
+                return
+            self._finish_combat(False)
+            return
+
+        self._show_match_status(
+            "Oponente atacou. Seu turno: selecione seus ataques."
+        )
+        self.match_turn_owner = "player"
+        self.match_attacked_cards.clear()
+        self._reset_player_attack_counts()
+        if not self._begin_player_combat_turn():
+            return
+        self._draw_match_board()
+
+    def _end_combat_turn(self):
+        if self.match_phase_state != "combat":
+            return
+        if self.match_turn_owner != "player":
+            return
+        self._opponent_attack()
+
+    def _finish_combat(self, player_won):
+        self.match_phase_state = "transition"
+        self.match_selected_attacker = None
+        self.match_attacked_cards.clear()
+        self._clear_combat_bonuses()
+        self._update_match_header()
+        if not player_won:
+            self.match_win_streak = 0
+            self.match_pending_coin_reward = 3
+            self.match_defeats += 1
+            damage = 15 + (self.match_phase - 1)
+            self.match_player_hp -= damage
+            if self.match_player_hp <= 0:
+                self._finish_match(
+                    False,
+                    f"Você perdeu o combate e recebeu {damage} de dano. "
+                    "Sua vida chegou a zero.",
+                )
+                return
+            result = (
+                f"Você perdeu o combate, recebeu {damage} de dano "
+                "e ganhou 3 moedas."
+            )
+        else:
+            self.match_defeats = 0
+            self.match_win_streak += 1
+            self.match_pending_coin_reward = self.match_win_streak
+            result = (
+                f"Você venceu o combate e ganhou "
+                f"{self.match_pending_coin_reward} moedas de recompensa."
+            )
+
+        self._show_match_status(f"{result} Preparando a próxima fase...")
+        self.after(700, self._start_next_phase)
+
+    def _start_next_phase(self):
+        self.match_phase += 1
+        self.match_coins = (
+            3
+            + self.match_pending_coin_reward
+            + self.match_combat_coin_bonus
+        )
+        self.match_pending_coin_reward = 0
+        self.match_combat_coin_bonus = 0
+        self._restore_destroyed_player_cards()
+        self.match_opponent_character_cards = []
+        self.match_opponent_reserve_cards = []
+        self.match_opponent_support_cards.clear()
+        self.match_enemy_spells_disabled = 0
+        if self.match_hand_locked:
+            # A trava vale apenas para esta troca de turno.
+            self.match_hand_locked = False
+            self._update_hand_lock_button()
+        else:
+            self.match_draw_pile.extend(self.match_purchase_cards)
+            self.match_purchase_cards = []
+            random.shuffle(self.match_draw_pile)
+            self._refill_purchase_cards()
+
+        opponent_pool = [
+            type(card)() for card in self.match_opponent_deck_cards
+            if getattr(card, "type", "") == "Character"
+        ]
+        random.shuffle(opponent_pool)
+        required_cards = self.match_phase + 1
+        if opponent_pool:
+            phase_opponent_cards = [
+                opponent_pool[index % len(opponent_pool)]
+                for index in range(required_cards)
+            ]
+            self.match_opponent_character_cards = phase_opponent_cards[:5]
+            self.match_opponent_reserve_cards = phase_opponent_cards[5:]
+        boss = None
+        if self.match_phase % self.BOSS_PHASE_INTERVAL == 0:
+            boss = self._spawn_phase_boss()
+        self._opponent_play_support_cards()
+        self.match_opponent_purchase_cards = []
+        self.match_opponent_draw_pile = []
+        self.match_phase_state = "preparation"
+        self.match_turn_owner = "player"
+        self._update_match_header()
+        phase_message = (
+            f"Fase {self.match_phase}: oponente colocou "
+            f"{len(self.match_opponent_character_cards)} monstros"
+            f" e deixou {len(self.match_opponent_reserve_cards)} na reserva."
+        )
+        if boss is not None:
+            phase_message += (
+                f" {boss.name} apareceu como chefe com {boss.hp} HP."
+            )
+        self._show_match_status(f"{phase_message} Prepare seu campo.")
+        self._draw_match_board()
+
+    def _finish_match(self, player_won, message):
+        self._show_match_status(message)
+        self._draw_match_board()
+        self.after(
+            250,
+            lambda: self._show_message(
+                "VITÓRIA" if player_won else "DERROTA",
+                f"{message}\n\nVocê pode voltar e iniciar uma nova partida.",
+            ),
+        )
 
     def _show_match_status(self, message):
         if hasattr(self, "match_status_label") and self.match_status_label.winfo_exists():
@@ -1991,6 +3490,8 @@ class CardBrowser(tk.Tk):
 
     def _prepare_match_card_image(self, card, width, height):
         image_name = self._find_image_name_for_card(card.name)
+        if not image_name:
+            return None
         image_path = self.image_dir / image_name
         if not image_path.exists():
             return None
@@ -2188,7 +3689,8 @@ class CardBrowser(tk.Tk):
         self.canvas.bind("<Configure>", lambda e: self._refresh_cards())
 
     def _on_mousewheel(self, event):
-        if self.canvas and self.canvas.winfo_exists():
+        scroll_canvas = self.deck_list_canvas or self.canvas
+        if scroll_canvas and scroll_canvas.winfo_exists():
             if getattr(event, "num", None) == 4:
                 amount = -3
             elif getattr(event, "num", None) == 5:
@@ -2198,7 +3700,7 @@ class CardBrowser(tk.Tk):
                 amount = int(-delta / 120)
                 if amount == 0 and delta:
                     amount = -1 if delta > 0 else 1
-            self.canvas.yview_scroll(amount, "units")
+            scroll_canvas.yview_scroll(amount, "units")
 
     @staticmethod
     def _normalize_card_name(value):
